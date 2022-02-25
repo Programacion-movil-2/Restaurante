@@ -27,6 +27,13 @@ const Persona = db.define(
             allowNull: true,
         },
 
+        idCargo:{
+            type: sequelize.INTEGER,
+            foreignkey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+
         direccion:{
             type: sequelize.BOOLEAN,
             allowNull: true, //permite nulos
