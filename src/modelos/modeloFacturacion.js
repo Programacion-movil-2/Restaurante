@@ -28,7 +28,7 @@ const Facturacion = db.define(
             allowNull: true,
         },
 
-        idCargo:{
+        idPedido:{
             type: sequelize.INTEGER,
             allowNull: false,
         },
