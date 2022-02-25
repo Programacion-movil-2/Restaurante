@@ -29,8 +29,6 @@ const Persona = db.define(
 
         idCargo:{
             type: sequelize.INTEGER,
-            foreignkey: true,
-            autoIncrement: true,
             allowNull: false,
         },
 
