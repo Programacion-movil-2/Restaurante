@@ -11,8 +11,13 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.set('json spaces', 2);
+app.use('/api/', require('./rutas'));
+app.use('/api/productos/', require('./rutas/rutaProducto'));
+app.use('/api/tipoProductos/', require('./rutas/rutaTipoProducto'));
 
 //Aperturo el puerto donde iniciará
 app.listen(5000, () =>{
     console.log("Servidor iniciado en el puerto 5000");
 })
+
+//localhost:5000/api/productos
