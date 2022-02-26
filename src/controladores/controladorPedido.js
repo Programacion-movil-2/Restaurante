@@ -13,7 +13,7 @@ exports.listarPedidos = async (req, res) =>{
 
 /*-------------------------------------------------CRUD----------------------------------------*/
 exports.guardarPedido = async (req, res) =>{
-    const{direccionEntrega, idCombo,nombreUsuario,idProductosPedido} = req.body; 
+    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!direccionEntrega || !nombreUsuario || !idProductosPedido)
     {
@@ -22,7 +22,7 @@ exports.guardarPedido = async (req, res) =>{
     else{
         await ModeloPedido.create({
             direccionEntrega: direccionEntrega,
-            idCombo: idCombo,
+            idCombos: idCombos,
             nombreUsuario:nombreUsuario,
             idProductosPedido:idProductosPedido,
         })
@@ -40,7 +40,7 @@ exports.guardarPedido = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarPedido = async (req, res) =>{
     const {idPedido} = req.query;
-    const{direccionEntrega, idCombo,nombreUsuario,idProductosPedido} = req.body; 
+    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
 
 
     if (!idPedido || !nombreUsuario || !direccionEntrega) {
@@ -61,7 +61,7 @@ exports.modificarPedido = async (req, res) =>{
         }
         else{
             buscarPedido.direccionEntrega = direccionEntrega;
-            buscarPedido.idCombo = idCombo;
+            buscarPedido.idCombos = idCombos;
             buscarPedido.nombreUsuario = nombreUsuario;
             buscarPedido.idProductosPedido = idProductosPedido;
             buscarPedido.save()
