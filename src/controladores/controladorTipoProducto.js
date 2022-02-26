@@ -39,16 +39,16 @@ exports.guardar = async (req, res) =>{
 };
 
 exports.modificar = async (req, res) =>{
-    const {id} = req.query;
+    const {idTipoProducto} = req.query;
     const{nombre, idTipoPrincipal} = req.body;
 
-    if (!id || !nombre) {
+    if (!idTipoProducto || !nombre) {
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
         var buscarTipoProducto = await ModeloTipoProducto.findOne({
             where:{
-                id: id
+                idTipoProducto: idTipoProducto
             }
         });
 
@@ -73,15 +73,15 @@ exports.modificar = async (req, res) =>{
 };
 
 exports.eliminar = async (req, res) =>{
-    const {id} = req.query;
+    const {idTipoProducto} = req.query;
 
-    if (!id) {
+    if (!idTipoProducto) {
         res.send("Por favor escriba el dato a eliminar...");
     }
     else{
         await ModeloTipoProducto.destroy({
             where:{
-                id: id
+                idTipoProducto: idTipoProducto
             }
         })
         .then((data) => {

@@ -42,17 +42,17 @@ exports.guardar = async (req, res) =>{
 };  
 
 exports.modificar = async (req, res) =>{
-    const {id} = req.query;
+    const {idProducto} = req.query;
     const {nombre, precio, imagen, descripcion, idTipoProducto} = req.body;
 
-    if (!id || !nombre || !precio|| !idTipoProducto)
+    if (!idProducto || !nombre || !precio|| !idTipoProducto)
     {
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
         var buscarProducto = await ModeloProducto.findOne({
             where:{
-                id: id
+                idProducto: idProducto
             }
         });
 
@@ -81,16 +81,16 @@ exports.modificar = async (req, res) =>{
 
 
 exports.eliminar = async (req, res) =>{
-    const {id} = req.query;
+    const {idProducto} = req.query;
 
-    if (!id)
+    if (!idProducto)
     {
         res.send("Por favor envíe los datos para la eliminacion...");
     }
     else{
         var buscarProducto = await ModeloProducto.findOne({
             where:{
-                id: id
+                idProducto: idProducto
             }
         });
 
