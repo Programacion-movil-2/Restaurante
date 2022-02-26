@@ -16,7 +16,7 @@ app.use('/api/productos/', require('./rutas/rutaProducto'));
 app.use('/api/tipoProductos/', require('./rutas/rutaTipoProducto'));
 
 //Aperturo el puerto donde iniciará
-app.listen(5000, () =>{
+app.listen(3001, () =>{
     console.log("Servidor iniciado en el puerto 5000");
 })
 

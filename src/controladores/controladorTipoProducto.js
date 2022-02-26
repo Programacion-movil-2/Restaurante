@@ -5,7 +5,7 @@ exports.inicio = async (req, res) =>{
 };
 
 exports.listarTiposProductos = async (req, res) =>{
-    const listaTipoProducto = await ModeloProducto.findAll();
+    const listaTipoProducto = await ModeloTipoProducto.findAll();
     
     if(listaTipoProducto.length == 0){
         res.send("No existen tipos de productos en la base");
@@ -57,7 +57,7 @@ exports.modificar = async (req, res) =>{
         }
         else{
             buscarTipoProducto.nombre = nombre;
-            buscarTipoProducto.idTipoPrincipal = apeidTipoPrincipalllido;
+            buscarTipoProducto.idTipoPrincipal = idTipoPrincipal;
             buscarTipoProducto.save()
 
             .then((data) => {

@@ -27,7 +27,8 @@ exports.guardar = async (req, res) =>{
             nombre: nombre,
             precio: precio,
             imagen: imagen,
-            descripcion: descripcion
+            descripcion: descripcion,
+            idTipoProducto: idTipoProducto
         })
         .then((data)=>{
             console.log(data);
