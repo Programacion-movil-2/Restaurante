@@ -12,7 +12,7 @@ exports.listarPedidos = async (req, res) =>{
 };
 
 /*-------------------------------------------------CRUD----------------------------------------*/
-exports.guardar = async (req, res) =>{
+exports.guardarPedido = async (req, res) =>{
     const{direccionEntrega, idCombo,nombreUsuario,idProductosPedido} = req.body; 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!direccionEntrega || !nombreUsuario || !idProductosPedido)
@@ -38,7 +38,7 @@ exports.guardar = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificar = async (req, res) =>{
+exports.modificarPedido = async (req, res) =>{
     const {idPedido} = req.query;
     const{direccionEntrega, idCombo,nombreUsuario,idProductosPedido} = req.body; 
 
@@ -80,7 +80,7 @@ exports.modificar = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminar = async (req, res) =>{
+exports.eliminarPedido = async (req, res) =>{
     const {idPedido} = req.query;
 
     //Validamos que nos esten enviando los datos
