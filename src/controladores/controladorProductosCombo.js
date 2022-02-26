@@ -1,34 +1,31 @@
-const ModeloPedido = require('../modelos/modeloPedido');
-
-exports.inicioPedidos = async (req, res) =>{
-    res.send("Estas en el inicio de pedidos");
+const ModeloProductosCombo = require('../modelos/modeloProductosCombo');
+exports.inicioProductoCombo = async (req, res) =>{
+    res.send("Estas en el inicio de productosCombos");
 };
 
-exports.listarPedidos = async (req, res) =>{
-    const listaPedidos = await ModeloPedido.findAll();
+exports.listarProductosCombo = async (req, res) =>{
+    const listaProductosCombo = await ModeloProductosCombo.findAll();
     
-    if(listaPedidos.length == 0){
-        res.send("No existen pedidos en la base");
+    if(listaProductosCombo.length == 0){
+        res.send("No existen productos en este combo en la base");
     }
     else{
-        res.json(listaPedidos);
+        res.json(listaProductosCombo);
     }
 };
 
 /*-------------------------------------------------CRUD----------------------------------------*/
-exports.guardarPedido = async (req, res) =>{
-    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
-    //Compruebo que si vengan datos y le digo al usuario que sino que revise
-    if(!direccionEntrega || !nombreUsuario || !idProductosPedido)
+exports.guardarProductoCombo = async (req, res) =>{
+    const{idProductosCombo, idProducto,cantidad} = req.body; 
+    if(!idProductosCombo || !idProducto || !cantidad)
     {
         res.send("Debe enviar los datos que se solicitan");
     }
     else{
-        await ModeloPedido.create({
-            direccionEntrega: direccionEntrega,
-            idCombos: idCombos,
-            nombreUsuario:nombreUsuario,
-            idProductosPedido:idProductosPedido,
+        await ModeloProductosCombo.create({
+            idProductosCombo: idProductosCombo,
+            idProducto: idProducto,
+            cantidad:cantidad
         })
         .then((data)=>{ 
             console.log(data.nombre);
@@ -42,33 +39,30 @@ exports.guardarPedido = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificarPedido = async (req, res) =>{
-    const {idPedido} = req.query;
-    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
+exports.modificarProductoCombo = async (req, res) =>{
+    const {idProductosCombo} = req.query;
+    const{idProducto,cantidad} = req.body; 
 
-
-    if (!idPedido || !nombreUsuario || !direccionEntrega) {
-        //Mostramos mensaje al usuario
+    if(!idProductosCombo || !idProducto || !cantidad){
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        var buscarPedido = await ModeloPedido.findOne({
+        var buscarProductosCombo = await ModeloProductosCombo.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                id: id
+                idProductosCombo: idProductosCombo
             }
         });
 
         //Validar si está null el campo
-        if (!buscarPedido) {
+        if (!buscarProductosCombo) {
             res.send("El id no existe");
         }
         else{
-            buscarPedido.direccionEntrega = direccionEntrega;
-            buscarPedido.idCombos = idCombos;
-            buscarPedido.nombreUsuario = nombreUsuario;
-            buscarPedido.idProductosPedido = idProductosPedido;
-            buscarPedido.save()
+            buscarProductosCombo.idProductosCombo = idProductosCombo;
+            buscarProductosCombo.idProducto = idProducto;
+            buscarProductosCombo.cantidad = cantidad;
+            buscarProductosCombo.save()
 
             //Mostramos mensaje de verificación
             .then((data) => {
@@ -84,18 +78,18 @@ exports.modificarPedido = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminarPedido = async (req, res) =>{
-    const {idPedido} = req.query;
+exports.eliminarProductoCombo = async (req, res) =>{
+    const {idProductosCombo} = req.query;
 
     //Validamos que nos esten enviando los datos
-    if (!idPedido) {
+    if (!idProductosCombo) {
         //Mostramos mensaje al usuario
         res.send("Por favor escriba el dato a eliminar...");
     }
     else{
-        await ModeloPedido.destroy({
+        await ModeloProductosCombo.destroy({
             where:{
-                idPedido: idPedido
+                idProductosCombo: idProductosCombo
             }
         })
         .then((data) => {
