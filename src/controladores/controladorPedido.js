@@ -44,7 +44,7 @@ exports.guardarPedido = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarPedido = async (req, res) =>{
     const {idPedido} = req.query;
-    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
+    const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido,subtotal} = req.body; 
 
 
     if (!idPedido || !nombreUsuario || !direccionEntrega) {
@@ -55,7 +55,7 @@ exports.modificarPedido = async (req, res) =>{
         var buscarPedido = await ModeloPedido.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                id: id
+                idPedido: idPedido
             }
         });
 
@@ -68,6 +68,7 @@ exports.modificarPedido = async (req, res) =>{
             buscarPedido.idCombos = idCombos;
             buscarPedido.nombreUsuario = nombreUsuario;
             buscarPedido.idProductosPedido = idProductosPedido;
+            buscarPedido.subtotal = subtotal;
             buscarPedido.save()
 
             //Mostramos mensaje de verificación
