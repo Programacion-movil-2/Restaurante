@@ -14,6 +14,8 @@ app.set('json spaces', 2);
 app.use('/api/', require('./rutas'));
 app.use('/api/productos/', require('./rutas/rutaProducto'));
 app.use('/api/tipoProductos/', require('./rutas/rutaTipoProducto'));
+app.use('/api/usuarios', require('./rutas/rutasUsuario'));
+app.use('/api/autenticacion', require('./rutas/rutasAutenticacion'));
 
 
 app.listen(5000, () =>{

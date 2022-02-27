@@ -70,7 +70,7 @@ exports.modificarContrasena = async (req, res) =>{
                 }
             });
             if(!buscarUsuario){
-                res.send("El id no existe o no se encuentra activo");
+                res.send("El Usuario no existe o no se encuentra activo");
             }
             else{
 
@@ -94,28 +94,33 @@ exports.eliminar = async (req, res) =>{
 
     const {nombreUsuario} = req.query;
     if(!nombreUsuario){
-        res.send("Debe enviar el Id");
+        res.send("Debe enviar el Nombre de Usuario");
     }
     else{
 
-        await ModeloUsuario.destroy({
+        var buscarUsuario = await ModeloUsuario.findOne({
             where:{
                 nombreUsuario: nombreUsuario
             }
         })
-        .then((data) => {
-            console.log(data);
-            if(data==0){
-                res.send("El Id ingresado, no existe");
-            }
-            else{
-                res.send("Registro Eliminado Correctamente")
-            }  
-        })
-        .catch((err) => {
-            console.log(err);
-            res.send("Error al eliminar");
-        });
+        if(!buscarUsuario){
+            res.send("El usuario no existe");
+        }
+        else{
+
+            buscarUsuario.estado = 'inactivo';
+            buscarUsuario.save()
+
+            .then((data) => {
+                console.log(data);
+                res.send("Registro Eliminado Correctamente"); 
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send("Error al eliminar");
+            });
+
+        }
     }    
 
 }
