@@ -5,7 +5,7 @@ const db = require('../configuracion/db');
 const ProductosCombo = db.define(
    "productosCombo",
    {
-       idTipoProducto:{
+        idProductosCombo:{
            type: sequelize.INTEGER,
            primaryKey: true,
            autoIncrement: true,
