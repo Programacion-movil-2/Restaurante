@@ -4,11 +4,11 @@ exports.inicio = async (req, res) =>{
     res.send("Estas en el inicio de productos");
 };
 
-exports.listarProductos = async (req, res) =>{
+exports.listarCombos = async (req, res) =>{
     const listaCombo = await modeloCombo.findAll();
     
     if(listaCombo.length == 0){
-        res.send("No existen productos en la base");
+        res.send("No existen combos en la base");
     }
     else{
         res.json(listaCombo);
