@@ -1,11 +1,10 @@
 //Funciones Específicas
 const ModeloPersona = require('../modelos/modeloPersona');
-//Va a imprimir los números del 1 al 10
-//Va a ser una función asíncrona
 exports.inicio = async (req, res) =>{
     res.send("Estas en el inicio de personas");
 };
 
+/*-------------------------------------------------CRUD----------------------------------------*/
 //Consulta para que muestre la lista de personas
 exports.listarPersonas = async (req, res) =>{
     const listaPersonas = await ModeloPersona.findAll();
@@ -18,16 +17,10 @@ exports.listarPersonas = async (req, res) =>{
     }
 };
 
-/*-------------------------------------------------CRUD----------------------------------------*/
 //Consulta para guardar
-/*Para esto es cuando le envian datos desde la aplicación en req, por lo cual
-debemos capturar esos datos, guardarlos en la base de datos */
 exports.guardar = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
     const{nombre, apellido, idCargo} = req.body; // Se recomienda colocar así como está en la BDD
-    //body porque vienen allí por lo tanto se toman
-    /**Para comprobar que todo funcion y ver que si se capturan los datos los comprobamos en consola
-    * console.log(nombre); console.log(apellido); */
 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!nombre || !apellido || !idCargo)
@@ -62,9 +55,6 @@ exports.modificar = async (req, res) =>{
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        //Validaremos que el id que está enviando existe, por esta razón se crea
-        //esta variable para poder comparar el dato recibido de la consulta
-        //es var porque vamos a cambiar los valores que existen
         var buscarPersona = await ModeloPersona.findOne({
             //Le digo cual es el dato que comparará
             where:{
@@ -93,11 +83,9 @@ exports.modificar = async (req, res) =>{
                 res.send("Error al modificar los datos...");
             });
         }
-        //Verificamos que lo busque
-        //console.log(buscarPersona);
+       
     }
-    /** console.log(req.query);
-    console.log(req.body);*/
+
 };
 
 //Conulta de Eliminar
