@@ -17,7 +17,7 @@ exports.listarFacturas = async (req, res) =>{
     }
 };
 
-exports.guardar = async (req, res) =>{
+exports.guardarFactura = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
     const{ isv, total, fecha, idPedido } = req.body; // Se recomienda colocar así como está en la BDD
 
@@ -45,7 +45,7 @@ exports.guardar = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificar = async (req, res) =>{
+exports.modificarFactura = async (req, res) =>{
     const {idFactura} = req.query;
     const{ isv, total, fecha, idPedido } = req.body;
 
@@ -87,7 +87,7 @@ exports.modificar = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminar = async (req, res) =>{
+exports.eliminarFactura = async (req, res) =>{
     const {idFactura} = req.query;
 
     //Validamos que nos esten enviando los datos

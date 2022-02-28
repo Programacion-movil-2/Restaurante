@@ -2,14 +2,14 @@
 const { Router } = require('express');
 
 //Vinculamos el archivo para cargarlo
-const controladorPersona = require('../controladores/controladorPersonas');
+const controladorCargo = require('../controladores/controladorCargo');
 const router = Router();
 
 //Definimos dos variables reques(reciben), res(envian respuestas)
-router.get('/', controladorPersona.inicio);
-router.get('/listar', controladorPersona.listarPersonas);
-router.post('/guardar', controladorPersona.guardar);
-router.put('/modificar', controladorPersona.modificar);
-router.delete('/eliminar', controladorPersona.eliminar);
+router.get('/', controladorCargo.inicio);
+router.get('/listar', controladorCargo.listarCargos);
+router.post('/guardar', controladorCargo.guardarCargo);
+router.put('/modificar', controladorCargo.modificarCargo);
+router.delete('/eliminar', controladorCargo.eliminarCargo);
 
 module.exports = router;

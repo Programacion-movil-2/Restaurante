@@ -18,7 +18,7 @@ exports.listarPersonas = async (req, res) =>{
 };
 
 //Consulta para guardar
-exports.guardar = async (req, res) =>{
+exports.guardarPersona = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
     const{nombre, apellido, idCargo} = req.body; // Se recomienda colocar así como está en la BDD
 
@@ -45,7 +45,7 @@ exports.guardar = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificar = async (req, res) =>{
+exports.modificarPersona = async (req, res) =>{
     const {idPersona} = req.query;
     const { nombre, apellido, telefono, idCargo } = req.body;
 
@@ -89,7 +89,7 @@ exports.modificar = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminar = async (req, res) =>{
+exports.eliminarPersona = async (req, res) =>{
     const {idPersona} = req.query;
 
     //Validamos que nos esten enviando los datos

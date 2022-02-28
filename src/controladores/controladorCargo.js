@@ -17,7 +17,7 @@ exports.listarCargos = async (req, res) =>{
     }
 };
 
-exports.guardar = async (req, res) =>{
+exports.guardarCargo = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
     const{ nombreCargo } = req.body; // Se recomienda colocar así como está en la BDD
 
@@ -42,7 +42,7 @@ exports.guardar = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificar = async (req, res) =>{
+exports.modificarCargo = async (req, res) =>{
     const {idCargo} = req.query;
     const { nombreCargo } = req.body;
 
@@ -81,7 +81,7 @@ exports.modificar = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminar = async (req, res) =>{
+exports.eliminarCargo = async (req, res) =>{
     const {idCargo} = req.query;
 
     //Validamos que nos esten enviando los datos

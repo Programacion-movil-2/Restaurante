@@ -2,7 +2,6 @@
 const express = require('express');
 const morgan = require('morgan');
 
-
 //Las variables de entorno deben estar definidas antes de todo
 require('dotenv').config();
 
@@ -16,7 +15,9 @@ app.use('/api/productos/', require('./rutas/rutaProducto'));
 app.use('/api/tipoProductos/', require('./rutas/rutaTipoProducto'));
 app.use('/api/usuarios', require('./rutas/rutasUsuario'));
 app.use('/api/autenticacion', require('./rutas/rutasAutenticacion'));
-
+app.use('/api/personas/', require('./rutas/rutaPersonas'));
+app.use('/api/cargos/', require('./rutas/rutaCargos'));
+app.use('/api/facturas/', require('./rutas/rutaFacturas'));
 app.use('/api/pedidos/', require('./rutas/rutaPedidos'));
 app.use('/api/productosCombo/', require('./rutas/rutaProductosCombo'));
 
