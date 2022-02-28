@@ -22,7 +22,7 @@ const Pedido = db.define(
             allowNull: true,
         },
 
-        idCombo:{
+        idCombos:{
             type: sequelize.INTEGER,
             allowNull: true,
         },

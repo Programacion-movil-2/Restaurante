@@ -47,12 +47,12 @@ const Usuario = db.define(
         }
     },
     {
-        tableName: "usuarios",
+        tableName: "usuario",
         timestamps: false,
         hooks:{
 
             beforeCreate(usuario){
-                const hash = bcrypt.hashSync(usuario.contrasena, 10);
+                const hash = bcrypt.hashSync(usuario.contrasena, 8);
                 usuario.contrasena = hash; 
             },
             beforeUpdate(usuario){
