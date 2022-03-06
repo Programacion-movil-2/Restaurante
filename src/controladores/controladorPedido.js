@@ -5,13 +5,33 @@ exports.inicioPedidos = async (req, res) =>{
 };
 
 exports.listarPedidos = async (req, res) =>{
-    const listaPedidos = await ModeloPedido.findAll();
+    const listaPedidos = await ModeloPedido.findAll({
+        where:{
+            estado:'recibido',
+        }
+    });
     
     if(listaPedidos.length == 0){
         res.send("No existen pedidos en la base");
     }
     else{
         res.json(listaPedidos);
+    }
+};
+
+exports.listarPedidosUsuario = async (req, res) =>{
+    const {idUsuario} = req.query;
+    var listaPedidosUsuario = await ModeloPedido.findAll({
+        where:{
+            idUsuario:idUsuario,
+        }
+    });
+    
+    if(this.listaPedidosUsuario.length == 0){
+        res.send("No existen pedidos de este usuario en la base");
+    }
+    else{
+        res.json(this.listaPedidosUsuario);
     }
 };
 
