@@ -23,8 +23,8 @@ exports.guardar = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const { nombreUsuario, correo, contrasena, idPersona } = req.body;
-        if(!nombreUsuario || !correo || !contrasena || !idPersona){
+        const { nombreUsuario, correo, contrasena } = req.body;
+        if(!nombreUsuario || !correo || !contrasena ){
 
             res.send("Debe enviar los datos obligatorios");
 
@@ -34,8 +34,7 @@ exports.guardar = async (req, res) =>{
             await ModeloUsuario.create({
                 nombreUsuario,
                 correo,
-                contrasena,
-                idPersona
+                contrasena
             })
             .then((data) => {
                 console.log(data.contrasena);
@@ -56,16 +55,16 @@ exports.modificarContrasena = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const {nombreUsuario} = req.query;
+        const {idUsuario} = req.query;
         const {contrasena} = req.body;
-        if(!nombreUsuario || !contrasena){
+        if(!idUsuario || !contrasena){
             res.send("Debe enviar los Datos Obligatorios");
         }
         else{
 
             var buscarUsuario = await ModeloUsuario.findOne({
                 where:{
-                    nombreUsuario: nombreUsuario,
+                    idUsuario: idUsuario,
                     estado: 'activo'
                 }
             });

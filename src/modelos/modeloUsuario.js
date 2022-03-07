@@ -5,11 +5,16 @@ const Usuario = db.define(
 
     "usuario",{
 
+        idUsuario:{
+            type: sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
+        },
 
         nombreUsuario:{
 
             type: sequelize.STRING(45),
-            primaryKey: true,
             allowNull: false,
 
         },
@@ -35,7 +40,6 @@ const Usuario = db.define(
         idPersona:{
 
             type: sequelize.INTEGER,
-            allowNull: false,
 
         },
         estado:{
