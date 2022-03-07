@@ -5,11 +5,16 @@ const Usuario = db.define(
 
     "usuario",{
 
+        idUsuario:{
+            type: sequelize.INTEGER,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false
+        },
 
         nombreUsuario:{
 
             type: sequelize.STRING(45),
-            primaryKey: true,
             allowNull: false,
 
         },
@@ -35,7 +40,6 @@ const Usuario = db.define(
         idPersona:{
 
             type: sequelize.INTEGER,
-            allowNull: false,
 
         },
         estado:{
@@ -47,12 +51,12 @@ const Usuario = db.define(
         }
     },
     {
-        tableName: "usuarios",
+        tableName: "usuario",
         timestamps: false,
         hooks:{
 
             beforeCreate(usuario){
-                const hash = bcrypt.hashSync(usuario.contrasena, 10);
+                const hash = bcrypt.hashSync(usuario.contrasena, 8);
                 usuario.contrasena = hash; 
             },
             beforeUpdate(usuario){

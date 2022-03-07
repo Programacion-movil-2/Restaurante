@@ -23,8 +23,8 @@ exports.guardar = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const { nombreUsuario, correo, contrasena, idPersona } = req.body;
-        if(!nombreUsuario || !correo || !contrasena || !idPersona){
+        const { nombreUsuario, correo, contrasena } = req.body;
+        if(!nombreUsuario || !correo || !contrasena ){
 
             res.send("Debe enviar los datos obligatorios");
 
@@ -34,8 +34,7 @@ exports.guardar = async (req, res) =>{
             await ModeloUsuario.create({
                 nombreUsuario,
                 correo,
-                contrasena,
-                idPersona
+                contrasena
             })
             .then((data) => {
                 console.log(data.contrasena);
@@ -56,21 +55,21 @@ exports.modificarContrasena = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const {nombreUsuario} = req.query;
+        const {idUsuario} = req.query;
         const {contrasena} = req.body;
-        if(!nombreUsuario || !contrasena){
+        if(!idUsuario || !contrasena){
             res.send("Debe enviar los Datos Obligatorios");
         }
         else{
 
             var buscarUsuario = await ModeloUsuario.findOne({
                 where:{
-                    nombreUsuario: nombreUsuario,
+                    idUsuario: idUsuario,
                     estado: 'activo'
                 }
             });
             if(!buscarUsuario){
-                res.send("El id no existe o no se encuentra activo");
+                res.send("El Usuario no existe o no se encuentra activo");
             }
             else{
 
@@ -94,28 +93,33 @@ exports.eliminar = async (req, res) =>{
 
     const {nombreUsuario} = req.query;
     if(!nombreUsuario){
-        res.send("Debe enviar el Id");
+        res.send("Debe enviar el Nombre de Usuario");
     }
     else{
 
-        await ModeloUsuario.destroy({
+        var buscarUsuario = await ModeloUsuario.findOne({
             where:{
                 nombreUsuario: nombreUsuario
             }
         })
-        .then((data) => {
-            console.log(data);
-            if(data==0){
-                res.send("El Id ingresado, no existe");
-            }
-            else{
-                res.send("Registro Eliminado Correctamente")
-            }  
-        })
-        .catch((err) => {
-            console.log(err);
-            res.send("Error al eliminar");
-        });
+        if(!buscarUsuario){
+            res.send("El usuario no existe");
+        }
+        else{
+
+            buscarUsuario.estado = 'inactivo';
+            buscarUsuario.save()
+
+            .then((data) => {
+                console.log(data);
+                res.send("Registro Eliminado Correctamente"); 
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send("Error al eliminar");
+            });
+
+        }
     }    
 
 }
