@@ -5,7 +5,11 @@ exports.inicio = async (req, res) =>{
 };
 
 exports.listarProductos = async (req, res) =>{
-    const listaProductos = await ModeloProducto.findAll();
+    const listaProductos = await ModeloProducto.findAll({
+        where:{
+            estado:'activo'
+        }
+    });
     
     if(listaProductos.length == 0){
         res.send("No existen productos en la base");
@@ -45,7 +49,7 @@ exports.modificar = async (req, res) =>{
     const {idProducto} = req.query;
     const {nombre, precio, imagen, descripcion, idTipoProducto} = req.body;
 
-    if (!idProducto || !nombre || !precio|| !idTipoProducto)
+    if (!idProducto || !idTipoProducto)
     {
         res.send("Por favor envíe los datos para la actualización...");
     }

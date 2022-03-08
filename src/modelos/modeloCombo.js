@@ -36,6 +36,12 @@ const Combo = db.define(
             type: sequelize.ENUM('dos', 'tres', 'familiar'),
             allowNull: false, //permite nulos
         },
+        estado:{
+            type: sequelize.ENUM('activo','inactivo'),
+            allowNull: true,
+            defaultvalue: 'activo'
+  
+        },
 
         idProductosCombo:{
             type: sequelize.INTEGER,

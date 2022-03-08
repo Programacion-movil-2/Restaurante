@@ -41,9 +41,9 @@ exports.guardarProductosPedido = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarProductosPedido = async (req, res) =>{
     const {idProductosPedido} = req.query;
-    const{idProducto,cantidad} = req.body; 
+    const{cantidad} = req.body; 
 
-    if(!idProductosPedido || !idProducto || !cantidad){
+    if(!idProductosPedido || !cantidad){
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
@@ -59,8 +59,6 @@ exports.modificarProductosPedido = async (req, res) =>{
             res.send("El id no existe");
         }
         else{
-            buscarProductosPedido.idProductosPedido = idProductosPedido;
-            buscarProductosPedido.idProducto = idProducto;
             buscarProductosPedido.cantidad = cantidad;
             buscarProductosPedido.save()
 

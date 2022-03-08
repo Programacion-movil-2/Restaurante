@@ -41,9 +41,9 @@ exports.guardarComboPedido = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarComboPedido = async (req, res) =>{
     const {idCombos} = req.query;
-    const{idCombo,cantidad} = req.body; 
+    const{cantidad} = req.body; 
 
-    if(!idCombos || !idCombo || !cantidad){
+    if(!idCombos || !cantidad){
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
@@ -59,8 +59,6 @@ exports.modificarComboPedido = async (req, res) =>{
             res.send("El id no existe");
         }
         else{
-            buscarComboPedido.idCombos = idCombos;
-            buscarComboPedido.idCombo = idCombo;
             buscarComboPedido.cantidad = cantidad;
             buscarComboPedido.save()
 

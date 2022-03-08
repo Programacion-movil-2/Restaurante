@@ -7,6 +7,6 @@ router.get('/', controladorCombo.inicio);
 router.get('/listarcombo', controladorCombo.listarCombos);
 router.post('/guardarcombo', controladorCombo.guardar);
 router.put('/modificarcombo', controladorCombo.modificar);
-router.delete('/eliminarcombo', controladorCombo.eliminar);
+router.put('/eliminarcombo', controladorCombo.eliminar);
 
 module.exports = router;
