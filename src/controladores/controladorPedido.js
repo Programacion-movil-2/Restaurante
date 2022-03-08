@@ -107,33 +107,35 @@ exports.modificarPedido = async (req, res) =>{
 //Conulta de Eliminar
 exports.eliminarPedido = async (req, res) =>{
     const {idPedido} = req.query;
-
-    //Validamos que nos esten enviando los datos
+    
     if (!idPedido) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        await ModeloPedido.destroy({
+        var buscarPedido = await ModeloPedido.findOne({
+            //Le digo cual es el dato que comparará
             where:{
                 idPedido: idPedido
             }
-        })
-        .then((data) => {
-            console.log(data);
-
-            //Verificamos que exista el id
-            if (data == 0) {
-                res.send("El id no existe");
-            }
-            else
-            {
-                res.send("Registro eliminado...");
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-            res.send("Error al eliminar el registro...");
         });
+        //Validar si está null el campo
+        if (!buscarPedido) {
+            res.send("El id no existe");
+        }
+        else{
+            buscarPedido.estado='inactivo';
+            buscarPedido.save()
+
+            //Mostramos mensaje de verificación
+            .then((data) => {
+                console.log(data);
+                res.send("Registro Eliminado...");
+            })
+            .catch((error)=>{
+                console.log(error);
+                res.send("Error al eliminar los datos...");
+            });
+        }
     }
 };
