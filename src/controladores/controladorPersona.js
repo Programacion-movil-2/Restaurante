@@ -20,10 +20,10 @@ exports.listarPersonas = async (req, res) =>{
 //Consulta para guardar
 exports.guardarPersona = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
-    const{nombre, apellido, idCargo} = req.body; // Se recomienda colocar así como está en la BDD
+    const{nombre, apellido, telefono} = req.body; // Se recomienda colocar así como está en la BDD
 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
-    if(!nombre || !apellido || !idCargo)
+    if(!nombre || !apellido || !telefono)
     {
         res.send("Debe enviar los datos que se solicitan");
     }
@@ -31,7 +31,7 @@ exports.guardarPersona = async (req, res) =>{
         await ModeloPersona.create({ //Esto es para almacenar los datos que se reciben
             nombre: nombre,
             apellido: apellido,
-            idCargo: idCargo,
+            telefono: telefono,
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             console.log(data.nombre);
@@ -47,7 +47,7 @@ exports.guardarPersona = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarPersona = async (req, res) =>{
     const {idPersona} = req.query;
-    const { nombre, apellido, telefono, idCargo } = req.body;
+    const {nombre, apellido, telefono, idCargo} = req.body;
 
     //Validamos que nos esten enviando los datos
     if (!idPersona || !nombre || !apellido) {
@@ -103,21 +103,23 @@ exports.eliminarPersona = async (req, res) =>{
                 idPersona: idPersona
             }
         })
-        .then((data) => {
-            console.log(data);
+        if(!buscarPersona){
+            res.send("El usuario no existe");
+        }
+        else{
 
-            //Verificamos que exista el id
-            if (data == 0) {
-                res.send("El id no existe");
-            }
-            else
-            {
-                res.send("Registro eliminado...");
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-            res.send("Error al eliminar el registro...");
-        });
+            buscarPersona.estado = 'inactivo';
+            buscarPersona.save()
+
+            .then((data) => {
+                console.log(data);
+                res.send("Registro Eliminado Correctamente"); 
+            })
+            .catch((err) => {
+                console.log(err);
+                res.send("Error al eliminar");
+            });
+
+        }
     }
 };

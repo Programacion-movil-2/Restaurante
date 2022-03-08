@@ -24,12 +24,12 @@ const Persona = db.define(
 
         telefono:{
             type: sequelize.STRING(45),
-            allowNull: true,
+            allowNull: false,
         },
 
         idCargo:{
             type: sequelize.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
 
         direccion:{
@@ -37,11 +37,19 @@ const Persona = db.define(
             allowNull: true, //permite nulos
             default: true,
         },
+
+        estado:{
+
+            type: sequelize.ENUM('activo','inactivo'),
+            allowNull: true,
+            defaultValue: 'activo'
+
+        }
        
     },
 
     {
-        tableName: "personas",
+        tableName: "persona",
         timestamps: false,
     }
 );
