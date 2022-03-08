@@ -41,7 +41,7 @@ exports.guardarPersona = async (req, res) =>{
             direccion: direccion
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
-            console.log(data.nombre);
+            //console.log(data.nombre);
             res.send("Registro almacenado correctamente...");
         })
         .catch((error)=>{

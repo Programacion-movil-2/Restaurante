@@ -46,6 +46,7 @@ exports.guardar = async (req, res) =>{
             }
         });
         if(buscarUsuario || buscarCorreo){
+            console.log("El Usuario y/o el Correo ya se encuentran registrados");
             res.send("El Usuario y/o el Correo ya se encuentran registrados");
         }
         else{
