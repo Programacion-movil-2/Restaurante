@@ -34,19 +34,11 @@ const Pedido = db.define(
 
         idProductosPedido:{
             type: sequelize.INTEGER,
-            allowNull: false,
-        },
-
-        estado:{
-
-            type: sequelize.ENUM('recibido','facturado','listo'),
             allowNull: true,
-            defaultValue: 'recibido'
-
         }
        
     },
-
+  
     {
         tableName: "pedido",
         timestamps: false,
