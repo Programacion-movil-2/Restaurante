@@ -43,11 +43,11 @@ exports.guardarCargo = async (req, res) =>{
 
 //Conulta de Modificar
 exports.modificarCargo = async (req, res) =>{
-    const {idCargo} = req.query;
+    const {idCargos} = req.query;
     const { nombreCargo } = req.body;
 
     //Validamos que nos esten enviando los datos
-    if (!idPersona || !nombreCargo) {
+    if (!idCargos || !nombreCargo) {
         //Mostramos mensaje al usuario
         res.send("Por favor envíe los datos para la actualización...");
     }
@@ -55,7 +55,7 @@ exports.modificarCargo = async (req, res) =>{
         var buscarCargo = await ModeloCargo.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                idCargo: idCargo
+                idCargos: idCargos
             }
         });
 
@@ -82,17 +82,17 @@ exports.modificarCargo = async (req, res) =>{
 
 //Conulta de Eliminar
 exports.eliminarCargo = async (req, res) =>{
-    const {idCargo} = req.query;
+    const {idCargos} = req.query;
 
     //Validamos que nos esten enviando los datos
-    if (!idCargo) {
+    if (!idCargos) {
         //Mostramos mensaje al usuario
         res.send("Por favor escriba el dato a eliminar...");
     }
     else{
         await ModeloCargo.destroy({
             where:{
-                idCargo: idCargo
+                idCargos: idCargos
             }
         })
         .then((data) => {

@@ -16,7 +16,7 @@ exports.InicioSesion = async (req, res) =>{
         const { nombreUsuario, contrasena } = req.body;
         const BuscarUsuario = await ModeloUsuario.findOne({
             where:{
-                correo: nombreUsuario,
+                nombreUsuario: nombreUsuario
             }
         });
         if(!BuscarUsuario){
@@ -30,9 +30,10 @@ exports.InicioSesion = async (req, res) =>{
                 const Token = passport.getToken({nombreUsuario: BuscarUsuario.nombreUsuario});
                 const data = {
                     token: Token,
-                    usuario: BuscarUsuario,
+                    // usuario: BuscarUsuario.nombreUsuario
                 };
-                msj("¡Bienvenido!", 200, data, res);
+                 const nombreLogin = BuscarUsuario.nombreUsuario;
+                msj("¡Bienvenido(a) " + nombreLogin +"!", 200, data, res);
             }            
         }          
     }

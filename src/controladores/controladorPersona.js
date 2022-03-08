@@ -56,7 +56,7 @@ exports.modificarPersona = async (req, res) =>{
     const {nombre, apellido, telefono, idCargo} = req.body;
 
     //Validamos que nos esten enviando los datos
-    if (!idPersona || !nombre || !apellido) {
+    if (!idPersona || !nombre || !apellido, !telefono) {
         //Mostramos mensaje al usuario
         res.send("Por favor envíe los datos para la actualización...");
     }
