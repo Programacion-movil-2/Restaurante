@@ -7,8 +7,14 @@ exports.inicio = async (req, res) =>{
 /*-------------------------------------------------CRUD----------------------------------------*/
 //Consulta para que muestre la lista de personas
 exports.listarPersonas = async (req, res) =>{
-    const listaPersonas = await ModeloPersona.findAll();
-    
+    const listaPersonas = await ModeloPersona.findAll({
+
+        where:{
+            estado:'activo',
+        }
+
+    });    
+
     if(listaPersonas.length == 0){
         res.send("No existen personas en la base");
     }
@@ -95,31 +101,35 @@ exports.eliminarPersona = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idPersona) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        await ModeloPersona.destroy({
+        var buscarPersona = await ModeloPersona.findOne({
+            //Le digo cual es el dato que comparará
             where:{
                 idPersona: idPersona
             }
-        })
-        if(!buscarPersona){
-            res.send("El usuario no existe");
+        });
+
+        //Validar si está null el campo
+        if (!buscarPersona) {
+            res.send("El id no existe");
         }
         else{
-
             buscarPersona.estado = 'inactivo';
             buscarPersona.save()
 
+            //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro Eliminado Correctamente"); 
+                res.send("Registro Eliminado");
             })
-            .catch((err) => {
-                console.log(err);
-                res.send("Error al eliminar");
+            .catch((error)=>{
+                console.log(error);
+                res.send("Error al eliminar los datos...");
             });
-
         }
+       
     }
+    
 };

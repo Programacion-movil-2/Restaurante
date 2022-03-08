@@ -5,7 +5,13 @@ exports.inicio = async (req, res) =>{
 };
 
 exports.listarCombos = async (req, res) =>{
-    const listaCombo = await modeloCombo.findAll();
+    const listaCombo = await modeloCombo.findAll({
+
+        where:{
+            estado:'activo',
+        }
+
+    });
     
     if(listaCombo.length == 0){
         res.send("No existen combos en la base");
