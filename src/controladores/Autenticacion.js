@@ -13,10 +13,10 @@ exports.InicioSesion = async (req, res) =>{
         msj("Los datos ingresados no son válidos", 200, validacion.array(), res);
     }
     else{
-        const { usuario, contrasena } = req.body;
+        const { nombreUsuario, contrasena } = req.body;
         const BuscarUsuario = await ModeloUsuario.findOne({
             where:{
-                correo: usuario,
+                nombreUsuario: nombreUsuario
             }
         });
         if(!BuscarUsuario){
@@ -30,9 +30,10 @@ exports.InicioSesion = async (req, res) =>{
                 const Token = passport.getToken({nombreUsuario: BuscarUsuario.nombreUsuario});
                 const data = {
                     token: Token,
-                    usuario: BuscarUsuario,
+                    // usuario: BuscarUsuario.nombreUsuario
                 };
-                msj("¡Bienvenido!", 200, data, res);
+                 const nombreLogin = BuscarUsuario.nombreUsuario;
+                msj("¡Bienvenido(a) " + nombreLogin +"!", 200, data, res);
             }            
         }          
     }

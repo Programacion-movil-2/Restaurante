@@ -7,7 +7,13 @@ exports.inicio = (req, res) => {
 }  
 exports.listar = async (req, res) =>{
 
-    const lista = await ModeloUsuario.findAll();
+    const lista = await ModeloUsuario.findAll({
+
+        where:{
+            estado:'activo',
+        }
+
+    });
     if(!lista){
         res.send("No existen Usuarios en la base de datos");
     }
@@ -23,8 +29,8 @@ exports.guardar = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const { nombreUsuario, correo, contrasena, idPersona } = req.body;
-        if(!nombreUsuario || !correo || !contrasena || !idPersona){
+        const { nombreUsuario, correo, contrasena } = req.body;
+        if(!nombreUsuario || !correo || !contrasena ){
 
             res.send("Debe enviar los datos obligatorios");
 
@@ -34,8 +40,7 @@ exports.guardar = async (req, res) =>{
             await ModeloUsuario.create({
                 nombreUsuario,
                 correo,
-                contrasena,
-                idPersona
+                contrasena
             })
             .then((data) => {
                 console.log(data.contrasena);
@@ -56,16 +61,16 @@ exports.modificarContrasena = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const {nombreUsuario} = req.query;
+        const {idUsuario} = req.query;
         const {contrasena} = req.body;
-        if(!nombreUsuario || !contrasena){
+        if(!idUsuario || !contrasena){
             res.send("Debe enviar los Datos Obligatorios");
         }
         else{
 
             var buscarUsuario = await ModeloUsuario.findOne({
                 where:{
-                    nombreUsuario: nombreUsuario,
+                    idUsuario: idUsuario,
                     estado: 'activo'
                 }
             });
@@ -92,8 +97,9 @@ exports.modificarContrasena = async (req, res) =>{
 }
 exports.eliminar = async (req, res) =>{
 
-    const {nombreUsuario} = req.query;
-    if(!nombreUsuario){
+    const {idUsuario} = req.query;
+    const {nombreUsuario} = req.body;
+    if(!nombreUsuario || !idUsuario){
         res.send("Debe enviar el Nombre de Usuario");
     }
     else{

@@ -7,8 +7,14 @@ exports.inicio = async (req, res) =>{
 /*-------------------------------------------------CRUD----------------------------------------*/
 //Consulta para que muestre la lista de personas
 exports.listarPersonas = async (req, res) =>{
-    const listaPersonas = await ModeloPersona.findAll();
-    
+    const listaPersonas = await ModeloPersona.findAll({
+
+        where:{
+            estado:'activo',
+        }
+
+    });    
+
     if(listaPersonas.length == 0){
         res.send("No existen personas en la base");
     }
@@ -20,10 +26,10 @@ exports.listarPersonas = async (req, res) =>{
 //Consulta para guardar
 exports.guardarPersona = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
-    const{nombre, apellido, idCargo} = req.body; // Se recomienda colocar así como está en la BDD
+    const{nombre, apellido, telefono} = req.body; // Se recomienda colocar así como está en la BDD
 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
-    if(!nombre || !apellido || !idCargo)
+    if(!nombre || !apellido || !telefono)
     {
         res.send("Debe enviar los datos que se solicitan");
     }
@@ -31,7 +37,7 @@ exports.guardarPersona = async (req, res) =>{
         await ModeloPersona.create({ //Esto es para almacenar los datos que se reciben
             nombre: nombre,
             apellido: apellido,
-            idCargo: idCargo,
+            telefono: telefono,
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             console.log(data.nombre);
@@ -47,10 +53,10 @@ exports.guardarPersona = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarPersona = async (req, res) =>{
     const {idPersona} = req.query;
-    const { nombre, apellido, telefono, idCargo } = req.body;
+    const {nombre, apellido, telefono, idCargo} = req.body;
 
     //Validamos que nos esten enviando los datos
-    if (!idPersona || !nombre || !apellido) {
+    if (!idPersona || !nombre || !apellido, !telefono) {
         //Mostramos mensaje al usuario
         res.send("Por favor envíe los datos para la actualización...");
     }
@@ -95,29 +101,35 @@ exports.eliminarPersona = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idPersona) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        await ModeloPersona.destroy({
+        var buscarPersona = await ModeloPersona.findOne({
+            //Le digo cual es el dato que comparará
             where:{
                 idPersona: idPersona
             }
-        })
-        .then((data) => {
-            console.log(data);
-
-            //Verificamos que exista el id
-            if (data == 0) {
-                res.send("El id no existe");
-            }
-            else
-            {
-                res.send("Registro eliminado...");
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-            res.send("Error al eliminar el registro...");
         });
+
+        //Validar si está null el campo
+        if (!buscarPersona) {
+            res.send("El id no existe");
+        }
+        else{
+            buscarPersona.estado = 'inactivo';
+            buscarPersona.save()
+
+            //Mostramos mensaje de verificación
+            .then((data) => {
+                console.log(data);
+                res.send("Registro Eliminado");
+            })
+            .catch((error)=>{
+                console.log(error);
+                res.send("Error al eliminar los datos...");
+            });
+        }
+       
     }
+    
 };

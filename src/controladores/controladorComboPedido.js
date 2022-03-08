@@ -1,13 +1,13 @@
-const modeloProductosPedido = require('../modelos/modeloProductosPedido');
-exports.inicioProductosPedido = async (req, res) =>{
-    res.send("Estas en el inicio de Productos Pedido");
+const modeloComboPedido = require('../modelos/modeloComboPedido');
+exports.inicioCombosPedido = async (req, res) =>{
+    res.send("Estas en el inicio de combosPedido");
 };
 
-exports.listarProductosPedido = async (req, res) =>{
-    const listaComboPedido = await modeloProductosPedido.findAll();
+exports.listarComboPedido = async (req, res) =>{
+    const listaComboPedido = await modeloComboPedido.findAll();
     
     if(listaComboPedido.length == 0){
-        res.send("No existen Productos pedidos en la base");
+        res.send("No existen combos pedidos en la base");
     }
     else{
         res.json(listaComboPedido);
@@ -15,16 +15,16 @@ exports.listarProductosPedido = async (req, res) =>{
 };
 
 /*-------------------------------------------------CRUD----------------------------------------*/
-exports.guardarProductosPedido = async (req, res) =>{
-    const{idProductosPedido, idProducto,cantidad} = req.body; 
-    if(!idProductosPedido || !idProducto || !cantidad)
+exports.guardarComboPedido = async (req, res) =>{
+    const{idCombos, idCombo,cantidad} = req.body; 
+    if(!idCombos || !idCombo || !cantidad)
     {
         res.send("Debe enviar los datos que se solicitan");
     }
     else{
-        await modeloProductosPedido.create({
-            idProductosPedido: idProductosPedido,
-            idProducto: idProducto,
+        await modeloComboPedido.create({
+            idCombos: idCombos,
+            idCombo: idCombo,
             cantidad:cantidad
         })
         .then((data)=>{ 
@@ -39,30 +39,30 @@ exports.guardarProductosPedido = async (req, res) =>{
 };  
 
 //Conulta de Modificar
-exports.modificarProductosPedido = async (req, res) =>{
-    const {idProductosPedido} = req.query;
-    const{idProducto,cantidad} = req.body; 
+exports.modificarComboPedido = async (req, res) =>{
+    const {idCombos} = req.query;
+    const{idCombo,cantidad} = req.body; 
 
-    if(!idProductosPedido || !idProducto || !cantidad){
+    if(!idCombos || !idCombo || !cantidad){
         res.send("Por favor envíe los datos para la actualización...");
     }
     else{
-        var buscarProductosPedido = await modeloProductosPedido.findOne({
+        var buscarComboPedido = await modeloComboPedido.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                idProductosPedido: idProductosPedido
+                idCombos: idCombos
             }
         });
 
         //Validar si está null el campo
-        if (!buscarProductosPedido) {
+        if (!buscarComboPedido) {
             res.send("El id no existe");
         }
         else{
-            buscarProductosPedido.idProductosPedido = idProductosPedido;
-            buscarProductosPedido.idProducto = idProducto;
-            buscarProductosPedido.cantidad = cantidad;
-            buscarProductosPedido.save()
+            buscarComboPedido.idCombos = idCombos;
+            buscarComboPedido.idCombo = idCombo;
+            buscarComboPedido.cantidad = cantidad;
+            buscarComboPedido.save()
 
             //Mostramos mensaje de verificación
             .then((data) => {
@@ -78,18 +78,18 @@ exports.modificarProductosPedido = async (req, res) =>{
 };
 
 //Conulta de Eliminar
-exports.eliminarProductosPedido = async (req, res) =>{
-    const {idProductosPedido} = req.query;
+exports.eliminarComboPedido = async (req, res) =>{
+    const {idCombos} = req.query;
 
     //Validamos que nos esten enviando los datos
-    if (!idProductosPedido) {
+    if (!idCombos) {
         //Mostramos mensaje al usuario
         res.send("Por favor escriba el dato a eliminar...");
     }
     else{
-        await modeloProductosPedido.destroy({
+        await modeloComboPedido.destroy({
             where:{
-                idProductosPedido: idProductosPedido
+                idCombos: idCombos
             }
         })
         .then((data) => {

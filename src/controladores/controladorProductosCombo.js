@@ -81,32 +81,34 @@ exports.modificarProductoCombo = async (req, res) =>{
 exports.eliminarProductoCombo = async (req, res) =>{
     const {idProductosCombo} = req.query;
 
-    //Validamos que nos esten enviando los datos
-    if (!idProductosCombo) {
-        //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+    if(!idProductosCombo){
+        res.send("Por favor envíe los datos para la eliminación...");
     }
     else{
-        await ModeloProductosCombo.destroy({
+        var buscarProductosCombo = await ModeloProductosCombo.findOne({
+            //Le digo cual es el dato que comparará
             where:{
                 idProductosCombo: idProductosCombo
             }
-        })
-        .then((data) => {
-            console.log(data);
-
-            //Verificamos que exista el id
-            if (data == 0) {
-                res.send("El id no existe");
-            }
-            else
-            {
-                res.send("Registro eliminado...");
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-            res.send("Error al eliminar el registro...");
         });
+
+        //Validar si está null el campo
+        if (!buscarProductosCombo) {
+            res.send("El id no existe");
+        }
+        else{
+            buscarProductosCombo.estado ='inactivo';
+            buscarProductosCombo.save()
+
+            //Mostramos mensaje de verificación
+            .then((data) => {
+                console.log(data);
+                res.send("Registro eliminado");
+            })
+            .catch((error)=>{
+                console.log(error);
+                res.send("Error al eliminar los datos...");
+            });
+        }
     }
 };

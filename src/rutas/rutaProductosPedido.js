@@ -1,12 +1,12 @@
 const { Router } = require('express');
 
-const controladorProductosPedido = require('../controladores/controladorProductosPedido');
+const controladorProductos = require('../controladores/controladorProductosPedido');
 const router = Router();
 
-router.get('/', controladorProductosPedido.inicio);
-router.get('/listarProductosPedido', controladorProductosPedido.listarProductosPedido);
-router.post('/guardarProductosPedido', controladorProductosPedido.guardar);
-router.put('/modificarProductosPedido', controladorProductosPedido.modificarCantidad);
-// router.delete('/eliminarProductosPedido', controladorProductosPedido.eliminar);
+router.get('/', controladorProductos.inicioProductosPedido);
+router.get('/listarProductosPedido', controladorProductos.listarProductosPedido);
+router.post('/guardarProductosPedido', controladorProductos.guardarProductosPedido);
+router.put('/modificarProductosPedido', controladorProductos.modificarProductosPedido);
+router.delete('/eliminarProductosPedido', controladorProductos.eliminarProductosPedido);
 
 module.exports = router;

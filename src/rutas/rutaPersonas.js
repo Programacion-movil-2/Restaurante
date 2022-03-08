@@ -2,7 +2,7 @@
 const { Router } = require('express');
 
 //Vinculamos el archivo para cargarlo
-const controladorPersona = require('../controladores/controladorPersonas');
+const controladorPersona = require('../controladores/controladorPersona');
 const router = Router();
 
 //Definimos dos variables reques(reciben), res(envian respuestas)

@@ -10,6 +10,6 @@ router.get('/', controladorFacturacion.inicio);
 router.get('/listar', controladorFacturacion.listarFacturas);
 router.post('/guardar', controladorFacturacion.guardarFactura);
 router.put('/modificar', controladorFacturacion.modificarFactura);
-router.delete('/eliminar', controladorFacturacion.Factura);
+router.delete('/eliminar', controladorFacturacion.eliminarFactura);
 
 module.exports = router;
