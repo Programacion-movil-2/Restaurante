@@ -21,10 +21,16 @@ const ProductosCombo = db.define(
            type: sequelize.INTEGER,
            allowNull: false,
        },
+       estado:{
+           type: sequelize.ENUM('activo','inactivo'),
+           allowNull:true,
+           default: 'activo'
+       }
    },
+   
  
    {
-       tableName: "productosCombo",
+       tableName: "productoscombo",
        timestamps: false,
    }
 );
