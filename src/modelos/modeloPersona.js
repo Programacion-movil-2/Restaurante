@@ -33,9 +33,9 @@ const Persona = db.define(
         },
 
         direccion:{
-            type: sequelize.BOOLEAN,
+            type: sequelize.STRING(250),
             allowNull: true, //permite nulos
-            default: true,
+            default: null,
         },
 
         estado:{

@@ -35,6 +35,19 @@ exports.guardar = async (req, res) =>{
             res.send("Debe enviar los datos obligatorios");
 
         }
+        var buscarUsuario = await ModeloUsuario.findOne({
+            where:{
+                nombreUsuario: nombreUsuario
+            }
+        });
+        var buscarCorreo = await ModeloUsuario.findOne({
+            where:{
+                correo: correo
+            }
+        });
+        if(buscarUsuario || buscarCorreo){
+            res.send("El Usuario y/o el Correo ya se encuentran registrados");
+        }
         else{
 
             await ModeloUsuario.create({
