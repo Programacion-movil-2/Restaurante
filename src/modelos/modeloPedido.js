@@ -38,7 +38,7 @@ const Pedido = db.define(
         }
        
     },
-
+  
     {
         tableName: "pedido",
         timestamps: false,
