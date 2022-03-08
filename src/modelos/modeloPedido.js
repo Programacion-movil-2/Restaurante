@@ -37,11 +37,15 @@ const Pedido = db.define(
             type: sequelize.INTEGER,
             allowNull: false,
         },
-       estado:{
-            type:sequelize.ENUM,
-            allowNull:true,
-            toDefaultValue: 'recibido',
-       }
+
+        estado:{
+
+            type: sequelize.ENUM('recibido','facturado','listo'),
+            allowNull: true,
+            defaultValue: 'recibido'
+
+        }
+       
     },
 
     {

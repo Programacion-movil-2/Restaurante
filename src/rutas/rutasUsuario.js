@@ -4,14 +4,12 @@ const { body, query } = require('express-validator');
 const ctrlAutenticacion = require('../controladores/Autenticacion');
 const router = Router();
 router.get('/', controladorUsuarios.inicio);
-router.get('/listar', ctrlAutenticacion.ValidarAutenticado, controladorUsuarios.listar);
+router.get('/listar', ctrlAutenticacion.ValidarAutenticado,  controladorUsuarios.listar);
 router.post('/guardar', 
 body('nombreUsuario').isLength({min: 5}).withMessage('La longitud minima es de 5 caracteres'), 
 body('correo').isEmail().withMessage('Ingrese un correo válido / example123@gmail.com'), 
-body('contrasena').isLength({min: 6}).withMessage('La contraseña debe tener una longitud minima de 6 caracteres'),
-body('idPersona').isInt().withMessage('Debe ingresar el ID de la persona'), controladorUsuarios.guardar);
+body('contrasena').isLength({min: 6}).withMessage('La contraseña debe tener una longitud minima de 6 caracteres'), controladorUsuarios.guardar);
 router.put('/modificarContrasena',
-body('contrasena').isLength({min: 6}).withMessage('La contraseña debe tener una longitud minima de 6 caracteres'),
-query('nombreUsuario').isLength({min: 5}).withMessage('La longitud minima es de 5 caracteres'), controladorUsuarios.modificarContrasena);
+body('contrasena').isLength({min: 6}).withMessage('La contraseña debe tener una longitud minima de 6 caracteres'), controladorUsuarios.modificarContrasena);
 router.delete('/eliminar', controladorUsuarios.eliminar);
-module.exports = router;
+module.exports = router;  

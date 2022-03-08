@@ -13,10 +13,10 @@ exports.InicioSesion = async (req, res) =>{
         msj("Los datos ingresados no son válidos", 200, validacion.array(), res);
     }
     else{
-        const { usuario, contrasena } = req.body;
+        const { nombreUsuario, contrasena } = req.body;
         const BuscarUsuario = await ModeloUsuario.findOne({
             where:{
-                correo: usuario,
+                correo: nombreUsuario,
             }
         });
         if(!BuscarUsuario){
