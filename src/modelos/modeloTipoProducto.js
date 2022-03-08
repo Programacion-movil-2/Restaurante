@@ -24,7 +24,7 @@ const TipoProducto = db.define(
    },
  
    {
-       tableName: "tipoProducto",
+       tableName: "tipoproducto",
        timestamps: false,
    }
 );
