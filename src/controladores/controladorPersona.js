@@ -26,7 +26,7 @@ exports.listarPersonas = async (req, res) =>{
 //Consulta para guardar
 exports.guardarPersona = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
-    const{nombre, apellido, telefono} = req.body; // Se recomienda colocar así como está en la BDD
+    const{nombre, apellido, telefono, direccion} = req.body; // Se recomienda colocar así como está en la BDD
 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!nombre || !apellido || !telefono)
@@ -38,6 +38,7 @@ exports.guardarPersona = async (req, res) =>{
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
+            direccion: direccion
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             console.log(data.nombre);
