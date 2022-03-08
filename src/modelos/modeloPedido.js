@@ -1,5 +1,4 @@
 const sequelize = require('sequelize');
-const { toDefaultValue } = require('sequelize/types/utils');
 const db = require('../configuracion/db');
 
 //Definimos los campos de las tablas
@@ -37,11 +36,15 @@ const Pedido = db.define(
             type: sequelize.INTEGER,
             allowNull: false,
         },
-       estado:{
-            type:sequelize.ENUM,
-            allowNull:true,
-            toDefaultValue: 'recibido',
-       }
+
+        estado:{
+
+            type: sequelize.ENUM('recibido','facturado','listo'),
+            allowNull: true,
+            defaultValue: 'recibido'
+
+        }
+       
     },
 
     {

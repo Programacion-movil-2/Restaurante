@@ -5,7 +5,7 @@ const db = require('../configuracion/db');
 const Facturacion = db.define(
     "facturacion",
     {
-        idPersona:{
+        idFactura:{
             type: sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
