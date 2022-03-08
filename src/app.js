@@ -20,6 +20,7 @@ app.use('/api/cargos/', require('./rutas/rutaCargos'));
 app.use('/api/facturas/', require('./rutas/rutaFacturas'));
 app.use('/api/pedidos/', require('./rutas/rutaPedidos'));
 app.use('/api/productosCombo/', require('./rutas/rutaProductosCombo'));
+app.use('/api/productosPedido/', require('./rutas/rutaProductosPedido'));
 
 //Aperturo el puerto donde iniciará
 app.listen(5000, () =>{
