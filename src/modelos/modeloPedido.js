@@ -34,7 +34,7 @@ const Pedido = db.define(
 
         idProductosPedido:{
             type: sequelize.INTEGER,
-            allowNull: false,
+            allowNull: true,
         }
        
     },
