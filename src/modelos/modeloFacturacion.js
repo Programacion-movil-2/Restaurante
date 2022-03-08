@@ -15,7 +15,7 @@ const Facturacion = db.define(
         isv:{
             type: sequelize.DOUBLE,
             default: "0.5",
-            allowNull: false,
+            allowNull: true,
         },
 
         total:{
