@@ -1,5 +1,4 @@
 const sequelize = require('sequelize');
-const { toDefaultValue } = require('sequelize/types/utils');
 const db = require('../configuracion/db');
 
 //Definimos los campos de las tablas
