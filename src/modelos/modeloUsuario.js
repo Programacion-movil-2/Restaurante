@@ -56,7 +56,7 @@ const Usuario = db.define(
         hooks:{
 
             beforeCreate(usuario){
-                const hash = bcrypt.hashSync(usuario.contrasena, 8);
+                const hash = bcrypt.hashSync(usuario.contrasena, 10);
                 usuario.contrasena = hash; 
             },
             beforeUpdate(usuario){
