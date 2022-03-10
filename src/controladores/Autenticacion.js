@@ -29,7 +29,7 @@ exports.InicioSesion = async (req, res) =>{
                 const Token = passport.getToken({nombreUsuario: BuscarUsuario.nombreUsuario});
                 const data = {
                     token: Token,
-                    // usuario: BuscarUsuario.nombreUsuario
+                    usuario: BuscarUsuario.nombreUsuario
                 };
                  const nombreLogin = BuscarUsuario.nombreUsuario;
                 msj("¡Bienvenido(a) " + nombreLogin +"!", 200, data, res);
