@@ -57,7 +57,7 @@ exports.guardar = async (req, res) =>{
                 contrasena
             })
             .then((data) => {
-                console.log(data.contrasena);
+                //console.log(data.contrasena);
                 res.send("Registro Almacenado!");              
             }).catch((err) => {
                 console.log(err);

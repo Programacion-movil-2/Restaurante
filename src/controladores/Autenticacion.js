@@ -1,10 +1,9 @@
 const ModeloUsuario = require('../modelos/modeloUsuario');
 const { validationResult } = require('express-validator');
 const passport = require('../configuracion/passport');
-//const enviarCorreo = require('../configuracion/correo');
+const enviarCorreo = require('../configuracion/envioCorreo');
 const msj = require('../componentes/mensaje');
 const { min, max } = require('moment');
-let dig1, dig2, dig3, dig4;
 
 exports.InicioSesion = async (req, res) =>{
 
@@ -64,7 +63,7 @@ exports.RecuperarCorreo = async (req, res) =>{
             }
 
         });
-        const pin = String.prototype.concat(dig1,dig2,dig3,dig4);
+        const pin = Math.floor(Math.random()*9999)+1000;
         const data ={
             correo: correo,
             pin: pin,
@@ -74,13 +73,3 @@ exports.RecuperarCorreo = async (req, res) =>{
     }
     
 };
-
-function generarPin(minimo, maximo){
-    return Math.floor(Math.random() * (maximo - minimo + 1) + minimo);
-}
-for(let i = 1; i <= 10; i++){
-    dig1 = generarPin(0, 9);
-    dig2 = generarPin(0, 9);
-    dig3 = generarPin(0, 9);
-    dig4 = generarPin(0, 9);
-}
