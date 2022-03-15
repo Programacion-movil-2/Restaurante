@@ -69,7 +69,7 @@ exports.RecuperarCorreo = async (req, res) =>{
             pin: pin,
         };
         enviarCorreo.recuperarContrasena(data);
-        res.send("Correo Enviado");
+        msj("Correo Enviado", 200, [], res);
     }
     
 };
