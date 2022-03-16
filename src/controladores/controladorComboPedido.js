@@ -1,13 +1,13 @@
 const modeloComboPedido = require('../modelos/modeloComboPedido');
 exports.inicioCombosPedido = async (req, res) =>{
-    res.send("Estas en el inicio de combosPedido");
+    msj("Estas en el inicio de combosPedido");
 };
 
 exports.listarComboPedido = async (req, res) =>{
     const listaComboPedido = await modeloComboPedido.findAll();
     
     if(listaComboPedido.length == 0){
-        res.send("No existen combos pedidos en la base");
+        msj("No existen combos pedidos en la base");
     }
     else{
         res.json(listaComboPedido);
@@ -19,7 +19,7 @@ exports.guardarComboPedido = async (req, res) =>{
     const{idCombos, idCombo,cantidad} = req.body; 
     if(!idCombos || !idCombo || !cantidad)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan");
     }
     else{
         await modeloComboPedido.create({
@@ -29,11 +29,11 @@ exports.guardarComboPedido = async (req, res) =>{
         })
         .then((data)=>{ 
             console.log(data.nombre);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...");
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...");
         });
     }
 };  
@@ -44,7 +44,7 @@ exports.modificarComboPedido = async (req, res) =>{
     const{idCombo,cantidad} = req.body; 
 
     if(!idCombos || !idCombo || !cantidad){
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...");
     }
     else{
         var buscarComboPedido = await modeloComboPedido.findOne({
@@ -56,7 +56,7 @@ exports.modificarComboPedido = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarComboPedido) {
-            res.send("El id no existe");
+            msj("El id no existe");
         }
         else{
             buscarComboPedido.idCombos = idCombos;
@@ -67,11 +67,11 @@ exports.modificarComboPedido = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...");
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...");
             });
         }
     }
@@ -84,7 +84,7 @@ exports.eliminarComboPedido = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idCombos) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        msj("Por favor escriba el dato a eliminar...");
     }
     else{
         await modeloComboPedido.destroy({
@@ -97,16 +97,16 @@ exports.eliminarComboPedido = async (req, res) =>{
 
             //Verificamos que exista el id
             if (data == 0) {
-                res.send("El id no existe");
+                msj("El id no existe");
             }
             else
             {
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...");
             }
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al eliminar el registro...");
+            msj("Error al eliminar el registro...");
         });
     }
 };
