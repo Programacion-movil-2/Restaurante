@@ -1,13 +1,14 @@
 const ModeloProductosCombo = require('../modelos/modeloProductosCombo');
+const msj = require('../componentes/mensaje');
 exports.inicioProductoCombo = async (req, res) =>{
-    res.send("Estas en el inicio de productosCombos");
+    msj("Estas en el inicio de productosCombos");
 };
 
 exports.listarProductosCombo = async (req, res) =>{
     const listaProductosCombo = await ModeloProductosCombo.findAll();
     
     if(listaProductosCombo.length == 0){
-        res.send("No existen productos en este combo en la base");
+        msj("No existen productos en este combo en la base", 200, [], res);
     }
     else{
         res.json(listaProductosCombo);
@@ -19,7 +20,7 @@ exports.guardarProductoCombo = async (req, res) =>{
     const{idProductosCombo, idProducto,cantidad} = req.body; 
     if(!idProductosCombo || !idProducto || !cantidad)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloProductosCombo.create({
@@ -29,11 +30,11 @@ exports.guardarProductoCombo = async (req, res) =>{
         })
         .then((data)=>{ 
             console.log(data.nombre);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -44,7 +45,7 @@ exports.modificarProductoCombo = async (req, res) =>{
     const{idProducto,cantidad} = req.body; 
 
     if(!idProductosCombo || !idProducto || !cantidad){
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarProductosCombo = await ModeloProductosCombo.findOne({
@@ -56,7 +57,7 @@ exports.modificarProductoCombo = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarProductosCombo) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarProductosCombo.idProductosCombo = idProductosCombo;
@@ -67,11 +68,11 @@ exports.modificarProductoCombo = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -82,7 +83,7 @@ exports.eliminarProductoCombo = async (req, res) =>{
     const {idProductosCombo} = req.query;
 
     if(!idProductosCombo){
-        res.send("Por favor envíe los datos para la eliminación...");
+        msj("Por favor envíe los datos para la eliminación...", 200, [], res);
     }
     else{
         var buscarProductosCombo = await ModeloProductosCombo.findOne({
@@ -94,7 +95,7 @@ exports.eliminarProductoCombo = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarProductosCombo) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarProductosCombo.estado ='inactivo';
@@ -103,11 +104,11 @@ exports.eliminarProductoCombo = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro eliminado");
+                msj("Registro eliminado", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al eliminar los datos...");
+                msj("Error al eliminar los datos...", 200, [], res);
             });
         }
     }

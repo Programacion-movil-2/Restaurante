@@ -1,7 +1,8 @@
 const ModeloPedido = require('../modelos/modeloPedido');
+const msj = require('../componentes/mensaje');
 
 exports.inicioPedidos = async (req, res) =>{
-    res.send("Estas en el inicio de pedidos");
+    msj("Estas en el inicio de pedidos", 200, [], res);
 };
 
 exports.listarPedidos = async (req, res) =>{
@@ -12,7 +13,8 @@ exports.listarPedidos = async (req, res) =>{
     });
     
     if(listaPedidos.length == 0){
-        res.send("No existen pedidos en la base");
+        msj("No existen pedidos en la base", 200, [], res);
+        
     }
     else{
         res.json(listaPedidos);
@@ -28,7 +30,7 @@ exports.listarPedidosUsuario = async (req, res) =>{
     });
     
     if(this.listaPedidosUsuario.length == 0){
-        res.send("No existen pedidos de este usuario en la base");
+        msj("No existen pedidos de este usuario en la base", 200, [], res);
     }
     else{
         res.json(this.listaPedidosUsuario);
@@ -39,9 +41,8 @@ exports.listarPedidosUsuario = async (req, res) =>{
 exports.guardarPedido = async (req, res) =>{
     const{direccionEntrega, idCombos,nombreUsuario,idProductosPedido} = req.body; 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
-    if(!direccionEntrega || !nombreUsuario || !idProductosPedido)
-    {
-        res.send("Debe enviar los datos que se solicitan");
+    if(!direccionEntrega || !nombreUsuario || !idProductosPedido){
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloPedido.create({
@@ -52,11 +53,11 @@ exports.guardarPedido = async (req, res) =>{
         })
         .then((data)=>{ 
             console.log(data.nombre);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -69,7 +70,7 @@ exports.modificarPedido = async (req, res) =>{
 
     if (!idPedido || !nombreUsuario || !direccionEntrega) {
         //Mostramos mensaje al usuario
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarPedido = await ModeloPedido.findOne({
@@ -81,7 +82,7 @@ exports.modificarPedido = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarPedido) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarPedido.direccionEntrega = direccionEntrega;
@@ -94,11 +95,11 @@ exports.modificarPedido = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -110,7 +111,7 @@ exports.eliminarPedido = async (req, res) =>{
     
     if (!idPedido) {
         //Mostramos mensaje al usuario
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la eliminación", 200, [], res);
     }
     else{
         var buscarPedido = await ModeloPedido.findOne({
@@ -121,7 +122,7 @@ exports.eliminarPedido = async (req, res) =>{
         });
         //Validar si está null el campo
         if (!buscarPedido) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarPedido.estado='inactivo';
@@ -130,11 +131,11 @@ exports.eliminarPedido = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro Eliminado...");
+                msj("Registro Eliminado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al eliminar los datos...");
+                msj("Error al eliminar los datos...", 200, [], res);
             });
         }
     }
