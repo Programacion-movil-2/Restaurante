@@ -1,4 +1,5 @@
 const ModeloUsuario = require("../modelos/modeloUsuario");
+const ModeloPersona = require("../modelos/modeloPersona");
 const { validationResult } = require('express-validator');
 const msj = require('../componentes/mensaje');
 exports.inicio = (req, res) => {
@@ -16,7 +17,7 @@ exports.listar = async (req, res) =>{
 
     });
     if(!lista){
-        res.send("No existen Usuarios en la base de datos");
+        msj("No existen Usuarios en la base de datos", 200, [], res);
     }
     else{
         res.json(lista);
