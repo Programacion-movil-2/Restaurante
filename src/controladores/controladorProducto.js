@@ -1,7 +1,8 @@
 const ModeloProducto = require('../modelos/modeloProducto');
+const msj = require('../componentes/mensaje');
 
 exports.inicio = async (req, res) =>{
-    res.send("Estas en el inicio de productos");
+    msj("Estas en el inicio de productos", 200, [], res);
 };
 
 exports.listarProductos = async (req, res) =>{
@@ -12,7 +13,7 @@ exports.listarProductos = async (req, res) =>{
     });
     
     if(listaProductos.length == 0){
-        res.send("No existen productos en la base");
+        msj("No existen productos en la base", 200, [], res);
     }
     else{
         res.json(listaProductos);
@@ -24,7 +25,7 @@ exports.guardar = async (req, res) =>{
 
     if(!nombre || !precio || !idTipoProducto)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloProducto.create({
@@ -36,11 +37,11 @@ exports.guardar = async (req, res) =>{
         })
         .then((data)=>{
             console.log(data);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -51,7 +52,7 @@ exports.modificar = async (req, res) =>{
 
     if (!idProducto || !idTipoProducto)
     {
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarProducto = await ModeloProducto.findOne({
@@ -61,7 +62,7 @@ exports.modificar = async (req, res) =>{
         });
 
         if (!buscarProducto) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarProducto.nombre = nombre;
@@ -73,11 +74,11 @@ exports.modificar = async (req, res) =>{
 
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -89,7 +90,7 @@ exports.eliminar = async (req, res) =>{
 
     if (!idProducto)
     {
-        res.send("Por favor envíe los datos para la eliminacion...");
+        msj("Por favor envíe los datos para la eliminacion...", 200, [], res);
     }
     else{
         var buscarProducto = await ModeloProducto.findOne({
@@ -99,7 +100,7 @@ exports.eliminar = async (req, res) =>{
         });
 
         if (!buscarProducto) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarProducto.estado = 'inactivo';
@@ -107,11 +108,11 @@ exports.eliminar = async (req, res) =>{
 
             .then((data) => {
                 console.log(data);
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }

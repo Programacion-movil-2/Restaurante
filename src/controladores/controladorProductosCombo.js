@@ -1,4 +1,6 @@
 const ModeloProductosCombo = require('../modelos/modeloProductosCombo');
+const msj = require('../componentes/mensaje');
+
 exports.inicioProductoCombo = async (req, res) =>{
     res.send("Estas en el inicio de productosCombos");
 };

@@ -1,13 +1,15 @@
 const modeloProductosPedido = require('../modelos/modeloProductosPedido');
+const msj = require('../componentes/mensaje');
+
 exports.inicioProductosPedido = async (req, res) =>{
-    res.send("Estas en el inicio de Productos Pedido");
+    msj("Estas en el inicio de Productos Pedido", 200, [], res);
 };
 
 exports.listarProductosPedido = async (req, res) =>{
     const listaComboPedido = await modeloProductosPedido.findAll();
     
     if(listaComboPedido.length == 0){
-        res.send("No existen Productos pedidos en la base");
+        msj("No existen Productos pedidos en la base", 200, [], res);
     }
     else{
         res.json(listaComboPedido);
@@ -19,7 +21,7 @@ exports.guardarProductosPedido = async (req, res) =>{
     const{idProductosPedido, idProducto,cantidad} = req.body; 
     if(!idProductosPedido || !idProducto || !cantidad)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await modeloProductosPedido.create({
@@ -29,11 +31,11 @@ exports.guardarProductosPedido = async (req, res) =>{
         })
         .then((data)=>{ 
             console.log(data.nombre);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -44,7 +46,7 @@ exports.modificarProductosPedido = async (req, res) =>{
     const{cantidad} = req.body; 
 
     if(!idProductosPedido || !cantidad){
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarProductosPedido = await modeloProductosPedido.findOne({
@@ -56,7 +58,7 @@ exports.modificarProductosPedido = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarProductosPedido) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarProductosPedido.cantidad = cantidad;
@@ -65,11 +67,11 @@ exports.modificarProductosPedido = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -82,7 +84,7 @@ exports.eliminarProductosPedido = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idProductosPedido) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        msj("Por favor escriba el dato a eliminar...", 200, [], res);
     }
     else{
         await modeloProductosPedido.destroy({
@@ -95,16 +97,16 @@ exports.eliminarProductosPedido = async (req, res) =>{
 
             //Verificamos que exista el id
             if (data == 0) {
-                res.send("El id no existe");
+                msj("El id no existe", 200, [], res);
             }
             else
             {
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...", 200, [], res);
             }
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al eliminar el registro...");
+            msj("Error al eliminar el registro...", 200, [], res);
         });
     }
 };

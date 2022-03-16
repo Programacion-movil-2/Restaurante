@@ -1,4 +1,5 @@
 const ModeloTipoProducto = require('../modelos/modeloTipoProducto');
+const msj = require('../componentes/mensaje');
 
 exports.inicio = async (req, res) =>{
     res.send("Estas en el inicio de tipos de productos");
@@ -8,7 +9,7 @@ exports.listarTiposProductos = async (req, res) =>{
     const listaTipoProducto = await ModeloTipoProducto.findAll();
     
     if(listaTipoProducto.length == 0){
-        res.send("No existen tipos de productos en la base");
+        msj("No existen tipos de productos en la base", 200, [], res);
     }
     else{
         res.json(listaTipoProducto);
@@ -20,7 +21,7 @@ exports.guardar = async (req, res) =>{
 
     if(!nombre)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloTipoProducto.create({
@@ -29,11 +30,11 @@ exports.guardar = async (req, res) =>{
         })
         .then((data)=>{
             console.log(data);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };
@@ -43,7 +44,7 @@ exports.modificar = async (req, res) =>{
     const{nombre, idTipoPrincipal} = req.body;
 
     if (!idTipoProducto || !nombre) {
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarTipoProducto = await ModeloTipoProducto.findOne({
@@ -53,7 +54,7 @@ exports.modificar = async (req, res) =>{
         });
 
         if (!buscarTipoProducto) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarTipoProducto.nombre = nombre;
@@ -62,11 +63,11 @@ exports.modificar = async (req, res) =>{
 
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -76,7 +77,7 @@ exports.eliminar = async (req, res) =>{
     const {idTipoProducto} = req.query;
 
     if (!idTipoProducto) {
-        res.send("Por favor escriba el dato a eliminar...");
+        msj("Por favor escriba el dato a eliminar...", 200, [], res);
     }
     else{
         await ModeloTipoProducto.destroy({
@@ -88,16 +89,16 @@ exports.eliminar = async (req, res) =>{
             console.log(data);
 
             if (data == 0) {
-                res.send("El id no existe");
+                msj("El id no existe", 200, [], res);
             }
             else
             {
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...", 200, [], res);
             }
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al eliminar el registro...");
+            msj("Error al eliminar el registro...", 200, [], res);
         });
     }
 };
