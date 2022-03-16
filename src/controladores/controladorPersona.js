@@ -1,5 +1,6 @@
 //Funciones Específicas
 const ModeloPersona = require('../modelos/modeloPersona');
+const msj = require('../componentes/mensaje');
 exports.inicio = async (req, res) =>{
     res.send("Estas en el inicio de personas");
 };
@@ -16,7 +17,7 @@ exports.listarPersonas = async (req, res) =>{
     });    
 
     if(listaPersonas.length == 0){
-        res.send("No existen personas en la base");
+        msj("No existen personas en la base", 200, [], res);
     }
     else{
         res.json(listaPersonas);
@@ -26,15 +27,16 @@ exports.listarPersonas = async (req, res) =>{
 //Consulta para guardar
 exports.guardarPersona = async (req, res) =>{
     //Capturamos los valores que vienen desde el postmas o aplicación
-    const{nombre, apellido, telefono, direccion} = req.body; // Se recomienda colocar así como está en la BDD
+    const{ identidad, nombre, apellido, telefono, direccion} = req.body; // Se recomienda colocar así como está en la BDD
 
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
-    if(!nombre || !apellido || !telefono)
+    if(!identidad || !nombre || !apellido || !telefono)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloPersona.create({ //Esto es para almacenar los datos que se reciben
+            identidad: identidad,
             nombre: nombre,
             apellido: apellido,
             telefono: telefono,
@@ -42,11 +44,11 @@ exports.guardarPersona = async (req, res) =>{
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             //console.log(data.nombre);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -54,12 +56,12 @@ exports.guardarPersona = async (req, res) =>{
 //Conulta de Modificar
 exports.modificarPersona = async (req, res) =>{
     const {idPersona} = req.query;
-    const {nombre, apellido, telefono, idCargo} = req.body;
+    const { nombre, apellido, telefono, idCargo} = req.body;
 
     //Validamos que nos esten enviando los datos
     if (!idPersona || !nombre || !apellido, !telefono) {
         //Mostramos mensaje al usuario
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarPersona = await ModeloPersona.findOne({
@@ -71,7 +73,7 @@ exports.modificarPersona = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarPersona) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarPersona.nombre = nombre;
@@ -83,11 +85,11 @@ exports.modificarPersona = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
        
@@ -102,7 +104,7 @@ exports.eliminarPersona = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idPersona) {
         //Mostramos mensaje al usuario
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarPersona = await ModeloPersona.findOne({
@@ -114,7 +116,7 @@ exports.eliminarPersona = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarPersona) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarPersona.estado = 'inactivo';
@@ -123,11 +125,11 @@ exports.eliminarPersona = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro Eliminado");
+                msj("Registro Eliminado", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al eliminar los datos...");
+                msj("Error al eliminar los datos...", 200, [], res);
             });
         }
        

@@ -1,5 +1,6 @@
 //Funciones Específicas
 const ModeloFacturacion = require('../modelos/modeloFacturacion');
+const msj = require('../componentes/mensaje');
 exports.inicio = async (req, res) =>{
     res.send("Estas en el inicio de facturas");
 };
@@ -10,7 +11,7 @@ exports.listarFacturas = async (req, res) =>{
     const listaFacturas = await ModeloFacturacion.findAll();
     
     if(listaFacturas.length == 0){
-        res.send("No existen cargos en la base");
+        msj("No existen cargos en la base", 200, [], res);
     }
     else{
         res.json(listaFacturas);
@@ -24,7 +25,7 @@ exports.guardarFactura = async (req, res) =>{
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!total || !fecha || !idPedido)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloFacturacion.create({ //Esto es para almacenar los datos que se reciben
@@ -34,11 +35,11 @@ exports.guardarFactura = async (req, res) =>{
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             console.log(data.idPedido);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  

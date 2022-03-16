@@ -12,6 +12,11 @@ const Persona = db.define(
             allowNull: false,
         },
 
+        identidad:{
+            type: sequelize.STRING(13),
+            allowNull: false,
+        },
+
         nombre:{
             type: sequelize.STRING(45),
             allowNull: false,
