@@ -1,7 +1,8 @@
 //Funciones Específicas
 const ModeloCargo = require('../modelos/modeloCargo');
+const msj = require('../componentes/mensaje');
 exports.inicio = async (req, res) =>{
-    res.send("Estas en el inicio de cargos");
+    msj("Estas en el inicio de cargos", 200, [], res);
 };
 
 /*-------------------------------------------------CRUD----------------------------------------*/
@@ -10,7 +11,7 @@ exports.listarCargos = async (req, res) =>{
     const listaCargos = await ModeloCargo.findAll();
     
     if(listaCargos.length == 0){
-        res.send("No existen cargos en la base");
+        msj("No existen cargos en la base", 200, [], res);
     }
     else{
         res.json(listaCargos);
@@ -24,7 +25,7 @@ exports.guardarCargo = async (req, res) =>{
     //Compruebo que si vengan datos y le digo al usuario que sino que revise
     if(!nombreCargo)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
     else{
         await ModeloCargo.create({ //Esto es para almacenar los datos que se reciben
@@ -32,11 +33,11 @@ exports.guardarCargo = async (req, res) =>{
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
             console.log(data.nombreCargo);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...", 200, [], res);
         });
     }
 };  
@@ -49,7 +50,7 @@ exports.modificarCargo = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idCargos || !nombreCargo) {
         //Mostramos mensaje al usuario
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else{
         var buscarCargo = await ModeloCargo.findOne({
@@ -61,7 +62,7 @@ exports.modificarCargo = async (req, res) =>{
 
         //Validar si está null el campo
         if (!buscarCargo) {
-            res.send("El id no existe");
+            msj("El id no existe", 200, [], res);
         }
         else{
             buscarCargo.nombreCargo = nombreCargo;
@@ -70,11 +71,11 @@ exports.modificarCargo = async (req, res) =>{
             //Mostramos mensaje de verificación
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...", 200, [], res);
             });
         }
     }
@@ -87,7 +88,7 @@ exports.eliminarCargo = async (req, res) =>{
     //Validamos que nos esten enviando los datos
     if (!idCargos) {
         //Mostramos mensaje al usuario
-        res.send("Por favor escriba el dato a eliminar...");
+        msj("Por favor escriba el dato a eliminar...", 200, [], res);
     }
     else{
         await ModeloCargo.destroy({
@@ -100,16 +101,16 @@ exports.eliminarCargo = async (req, res) =>{
 
             //Verificamos que exista el id
             if (data == 0) {
-                res.send("El id no existe");
+                msj("El id no existe", 200, [], res);
             }
             else
             {
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...", 200, [], res);
             }
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al eliminar el registro...");
+            msj("Error al eliminar el registro...", 200, [], res);
         });
     }
 };
