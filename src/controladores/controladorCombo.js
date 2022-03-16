@@ -1,7 +1,7 @@
 const modeloCombo = require('../modelos/modeloCombo');
 
 exports.inicio = async (req, res) =>{
-    res.send("Estas en el inicio de productos");
+    msj("Estas en el inicio de productos");
 };
 
 exports.listarCombos = async (req, res) =>{
@@ -14,7 +14,7 @@ exports.listarCombos = async (req, res) =>{
     });
     
     if(listaCombo.length == 0){
-        res.send("No existen combos en la base");
+        msj("No existen combos en la base");
     }
     else{
         res.json(listaCombo);
@@ -26,7 +26,7 @@ exports.guardar = async (req, res) =>{
 
     if(!nombre || !precio || !idProductosCombo || !categoria)
     {
-        res.send("Debe enviar los datos que se solicitan");
+        msj("Debe enviar los datos que se solicitan");
     }
     else{
         await modeloCombo.create({
@@ -39,11 +39,11 @@ exports.guardar = async (req, res) =>{
         })
         .then((data)=>{
             console.log(data);
-            res.send("Registro almacenado correctamente...");
+            msj("Registro almacenado correctamente...");
         })
         .catch((error)=>{
             console.log(error);
-            res.send("Error al guardar los datos...");
+            msj("Error al guardar los datos...");
         });
     }
 };  
@@ -54,7 +54,7 @@ exports.modificar = async (req, res) =>{
 
     if (!idCombo || !nombre || !precio|| !categoria || !idProductosCombo)
     {
-        res.send("Por favor envíe los datos para la actualización...");
+        msj("Por favor envíe los datos para la actualización...");
     }
     else{
         var buscarCombo = await modeloCombo.findOne({
@@ -64,7 +64,7 @@ exports.modificar = async (req, res) =>{
         });
 
         if (!buscarCombo) {
-            res.send("El id no existe");
+            msj("El id no existe");
         }
         else{
             buscarCombo.nombre = nombre;
@@ -77,11 +77,11 @@ exports.modificar = async (req, res) =>{
 
             .then((data) => {
                 console.log(data);
-                res.send("Registro actualizado y guardado...");
+                msj("Registro actualizado y guardado...");
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...");
             });
         }
     }
@@ -93,7 +93,7 @@ exports.eliminar = async (req, res) =>{
 
     if (!idCombo)
     {
-        res.send("Por favor envíe los datos para la eliminacion...");
+        msj("Por favor envíe los datos para la eliminacion...");
     }
     else{
         var buscarCombo = await modeloCombo.findOne({
@@ -103,7 +103,7 @@ exports.eliminar = async (req, res) =>{
         });
 
         if (!buscarCombo) {
-            res.send("El id no existe");
+            msj("El id no existe");
         }
         else{
             buscarCombo.estado = 'inactivo';
@@ -111,11 +111,11 @@ exports.eliminar = async (req, res) =>{
 
             .then((data) => {
                 console.log(data);
-                res.send("Registro eliminado...");
+                msj("Registro eliminado...");
             })
             .catch((error)=>{
                 console.log(error);
-                res.send("Error al modificar los datos...");
+                msj("Error al modificar los datos...");
             });
         }
     }
