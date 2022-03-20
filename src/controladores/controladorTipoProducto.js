@@ -110,7 +110,7 @@ exports.listarTipo = async (req, res) => {
         msj("Por favor envíe los datos", 200, [], res);
     }
     else {
-        const tipo = await ModeloTipoProducto.findOne({
+        const tipo = await ModeloTipoProducto.findAll({
             where: {
                
                 idTipoProducto:idTipoProducto
