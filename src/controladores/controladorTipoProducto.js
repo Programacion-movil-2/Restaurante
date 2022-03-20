@@ -121,7 +121,7 @@ exports.listarTipo = async (req, res) => {
             msj("No existen productos en la base", 200, [], res);
         }
         else {
-            res.json(tipo);
+            res.json(tipo[0]);
         }
     }
 };

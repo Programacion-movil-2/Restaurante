@@ -136,3 +136,38 @@ exports.listarProductosPorTipo = async (req, res) => {
         }
     }
 };
+exports.listarProductosDeCategorias = async (req, res) => {
+    const { idTipoProducto } = req.query;
+
+    if (idTipoProducto ==1) {
+        const listaProductos = await ModeloProducto.findAll({
+            where: {
+                estado: 'activo',
+                idTipoProducto:[2,3,4]
+            }
+        });
+
+        if (listaProductos.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(listaProductos);
+        }
+    }
+    else {
+        const listaProductos = await ModeloProducto.findAll({
+            where: {
+                estado: 'activo',
+                idTipoProducto:[6,7]
+            }
+        });
+
+        if (listaProductos.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(listaProductos);
+        }
+        
+    }
+};
