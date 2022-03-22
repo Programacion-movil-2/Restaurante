@@ -21,6 +21,11 @@ const TipoProducto = db.define(
            type: sequelize.INTEGER,
            allowNull: true,
        },
+       
+       imagen:{
+        type: sequelize.STRING(250),
+        allowNull: true
+    },
    },
  
    {

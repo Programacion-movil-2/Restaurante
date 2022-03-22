@@ -17,7 +17,7 @@ exports.listarTiposProductos = async (req, res) =>{
 };
 
 exports.guardar = async (req, res) =>{
-    const{nombre, idTipoPrincipal} = req.body;
+    const{nombre, idTipoPrincipal,imagen} = req.body;
 
     if(!nombre)
     {
@@ -27,6 +27,7 @@ exports.guardar = async (req, res) =>{
         await ModeloTipoProducto.create({
             nombre: nombre,
             idTipoPrincipal: idTipoPrincipal,
+            imagen:imagen
         })
         .then((data)=>{
             console.log(data);
