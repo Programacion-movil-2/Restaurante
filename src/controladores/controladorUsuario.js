@@ -31,12 +31,21 @@ exports.guardar = async (req, res) =>{
         res.json(validacion.array());
     }
     else{
-        const { nombreUsuario, correo, contrasena } = req.body;
-        if(!nombreUsuario || !correo || !contrasena ){
+        const {identidad, nombreUsuario, correo, contrasena} = req.body;
+                
+        if(!identidad || !nombreUsuario || !correo || !contrasena ){
 
             msj("Debe enviar los datos obligatorios", 200, [], res);
 
         }
+        var Persona = await ModeloPersona.findOne({
+
+            where:{
+                identidad: identidad
+            }
+
+        });
+        const idPersona = Persona.idPersona
         var buscarUsuario = await ModeloUsuario.findOne({
             where:{
                 nombreUsuario: nombreUsuario
@@ -56,7 +65,8 @@ exports.guardar = async (req, res) =>{
             await ModeloUsuario.create({
                 nombreUsuario,
                 correo,
-                contrasena
+                contrasena,
+                idPersona
             })
             .then((data) => {
                 //console.log(data.contrasena);
@@ -72,26 +82,30 @@ exports.guardar = async (req, res) =>{
 exports.modificarContrasena = async (req, res) =>{
 
     const validacion = validationResult(req);
+    console.log(req.body);
     if(!validacion.isEmpty()){
         console.log(validacion.array());
-        res.json(validacion.array());
+        res.json(validacion.array())
     }
     else{
-        const {idUsuario} = req.query;
-        const {contrasena} = req.body;
-        if(!idUsuario || !contrasena){
+        const {correo, pin, contrasena} = req.body;
+        if(!pin || !contrasena){
             msj("Debe enviar los Datos Obligatorios", 200, [], res);
         }
         else{
 
             var buscarUsuario = await ModeloUsuario.findOne({
                 where:{
-                    idUsuario: idUsuario,
+                    correo: correo, 
+                    pin: pin,
                     estado: 'activo'
                 }
             });
             if(!buscarUsuario){
                 msj("El Usuario no existe o no se encuentra activo", 200, [], res);
+            }
+            else if(buscarUsuario.pin != pin){
+                msj("El Pin ingresado no es válido", 200, [], res);
             }
             else{
 
@@ -105,7 +119,7 @@ exports.modificarContrasena = async (req, res) =>{
                    msj("Error al Actualizar", 200, [], res);
                 });
 
-            }
+            }            
             console.log(buscarUsuario);
         }
     }

@@ -64,6 +64,8 @@ exports.RecuperarCorreo = async (req, res) =>{
 
         });
         const pin = Math.floor(Math.random()*9999)+1000;
+        buscarUsuario.pin = pin;
+        buscarUsuario.save();
         const data ={
             correo: correo,
             pin: pin,

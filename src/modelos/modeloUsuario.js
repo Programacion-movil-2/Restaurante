@@ -26,9 +26,9 @@ const Usuario = db.define(
         },    
         pin:{
 
-            type: sequelize.CHAR(4),
+            type: sequelize.CHAR(5),
             allowNull: true,
-            defaultValue: '0000',
+            defaultValue: '00000',
 
         },
         correo:{
