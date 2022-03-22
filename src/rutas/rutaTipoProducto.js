@@ -8,5 +8,5 @@ router.get('/listarTipoProducto', controladorTipoProducto.listarTiposProductos);
 router.post('/guardar', controladorTipoProducto.guardar);
 router.put('/modificar', controladorTipoProducto.modificar);
 router.delete('/eliminar', controladorTipoProducto.eliminar);
-
+router.get('/listarTipo', controladorTipoProducto.listarTipo);
 module.exports = router;

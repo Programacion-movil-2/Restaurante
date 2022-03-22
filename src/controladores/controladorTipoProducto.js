@@ -102,3 +102,26 @@ exports.eliminar = async (req, res) =>{
         });
     }
 };
+
+exports.listarTipo = async (req, res) => {
+    const { idTipoProducto } = req.query;
+
+    if (!idTipoProducto) {
+        msj("Por favor envíe los datos", 200, [], res);
+    }
+    else {
+        const tipo = await ModeloTipoProducto.findAll({
+            where: {
+               
+                idTipoProducto:idTipoProducto
+            }
+        });
+
+        if (tipo.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(tipo[0]);
+        }
+    }
+};

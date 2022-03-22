@@ -1,33 +1,32 @@
 const ModeloProducto = require('../modelos/modeloProducto');
 const msj = require('../componentes/mensaje');
 
-exports.inicio = async (req, res) =>{
+exports.inicio = async (req, res) => {
     msj("Estas en el inicio de productos", 200, [], res);
 };
 
-exports.listarProductos = async (req, res) =>{
+exports.listarProductos = async (req, res) => {
     const listaProductos = await ModeloProducto.findAll({
-        where:{
-            estado:'activo'
+        where: {
+            estado: 'activo'
         }
     });
-    
-    if(listaProductos.length == 0){
+
+    if (listaProductos.length == 0) {
         msj("No existen productos en la base", 200, [], res);
     }
-    else{
+    else {
         res.json(listaProductos);
     }
 };
 
-exports.guardar = async (req, res) =>{
-    const{nombre, precio, imagen, descripcion, idTipoProducto} = req.body;
+exports.guardar = async (req, res) => {
+    const { nombre, precio, imagen, descripcion, idTipoProducto } = req.body;
 
-    if(!nombre || !precio || !idTipoProducto)
-    {
+    if (!nombre || !precio || !idTipoProducto) {
         msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
-    else{
+    else {
         await ModeloProducto.create({
             nombre: nombre,
             precio: precio,
@@ -35,28 +34,27 @@ exports.guardar = async (req, res) =>{
             descripcion: descripcion,
             idTipoProducto: idTipoProducto
         })
-        .then((data)=>{
-            console.log(data);
-            msj("Registro almacenado correctamente...", 200, [], res);
-        })
-        .catch((error)=>{
-            console.log(error);
-            msj("Error al guardar los datos...", 200, [], res);
-        });
+            .then((data) => {
+                console.log(data);
+                msj("Registro almacenado correctamente...", 200, [], res);
+            })
+            .catch((error) => {
+                console.log(error);
+                msj("Error al guardar los datos...", 200, [], res);
+            });
     }
-};  
+};
 
-exports.modificar = async (req, res) =>{
-    const {idProducto} = req.query;
-    const {nombre, precio, imagen, descripcion, idTipoProducto} = req.body;
+exports.modificar = async (req, res) => {
+    const { idProducto } = req.query;
+    const { nombre, precio, imagen, descripcion, idTipoProducto } = req.body;
 
-    if (!idProducto || !idTipoProducto)
-    {
+    if (!idProducto || !idTipoProducto) {
         msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
-    else{
+    else {
         var buscarProducto = await ModeloProducto.findOne({
-            where:{
+            where: {
                 idProducto: idProducto
             }
         });
@@ -64,7 +62,7 @@ exports.modificar = async (req, res) =>{
         if (!buscarProducto) {
             msj("El id no existe", 200, [], res);
         }
-        else{
+        else {
             buscarProducto.nombre = nombre;
             buscarProducto.precio = precio;
             buscarProducto.imagen = imagen;
@@ -72,29 +70,28 @@ exports.modificar = async (req, res) =>{
             buscarProducto.idTipoProducto = idTipoProducto;
             buscarProducto.save()
 
-            .then((data) => {
-                console.log(data);
-                msj("Registro actualizado y guardado...", 200, [], res);
-            })
-            .catch((error)=>{
-                console.log(error);
-                msj("Error al modificar los datos...", 200, [], res);
-            });
+                .then((data) => {
+                    console.log(data);
+                    msj("Registro actualizado y guardado...", 200, [], res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    msj("Error al modificar los datos...", 200, [], res);
+                });
         }
     }
 };
 
 
-exports.eliminar = async (req, res) =>{
-    const {idProducto} = req.query;
+exports.eliminar = async (req, res) => {
+    const { idProducto } = req.query;
 
-    if (!idProducto)
-    {
+    if (!idProducto) {
         msj("Por favor envíe los datos para la eliminacion...", 200, [], res);
     }
-    else{
+    else {
         var buscarProducto = await ModeloProducto.findOne({
-            where:{
+            where: {
                 idProducto: idProducto
             }
         });
@@ -102,18 +99,75 @@ exports.eliminar = async (req, res) =>{
         if (!buscarProducto) {
             msj("El id no existe", 200, [], res);
         }
-        else{
+        else {
             buscarProducto.estado = 'inactivo';
             buscarProducto.save()
 
-            .then((data) => {
-                console.log(data);
-                msj("Registro eliminado...", 200, [], res);
-            })
-            .catch((error)=>{
-                console.log(error);
-                msj("Error al modificar los datos...", 200, [], res);
-            });
+                .then((data) => {
+                    console.log(data);
+                    msj("Registro eliminado...", 200, [], res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    msj("Error al modificar los datos...", 200, [], res);
+                });
         }
+    }
+};
+exports.listarProductosPorTipo = async (req, res) => {
+    const { idTipoProducto } = req.query;
+
+    if (!idTipoProducto) {
+        msj("Por favor envíe los datos", 200, [], res);
+    }
+    else {
+        const listaProductosTipo = await ModeloProducto.findAll({
+            where: {
+                estado: 'activo',
+                idTipoProducto:idTipoProducto
+            }
+        });
+
+        if (listaProductosTipo.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(listaProductosTipo);
+        }
+    }
+};
+exports.listarProductosDeCategorias = async (req, res) => {
+    const { idTipoProducto } = req.query;
+
+    if (idTipoProducto ==1) {
+        const listaProductos = await ModeloProducto.findAll({
+            where: {
+                estado: 'activo',
+                idTipoProducto:[2,3,4]
+            }
+        });
+
+        if (listaProductos.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(listaProductos);
+        }
+    }
+    else {
+        const listaProductos = await ModeloProducto.findAll({
+            where: {
+                estado: 'activo',
+                idTipoProducto:[6,7]
+            }
+        });
+
+        if (listaProductos.length == 0) {
+            msj("No existen productos en la base", 200, [], res);
+        }
+        else {
+            res.json(listaProductos);
+        }
+        
     }
 };
