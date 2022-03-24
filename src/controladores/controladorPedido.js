@@ -1,4 +1,5 @@
 const ModeloPedido = require('../modelos/modeloPedido');
+const ModeloUsuario = require('../modelos/modeloUsuario');
 const msj = require('../componentes/mensaje');
 
 exports.inicioPedidos = async (req, res) =>{
@@ -96,6 +97,93 @@ exports.modificarPedido = async (req, res) =>{
             .then((data) => {
                 console.log(data);
                 msj("Registro actualizado y guardado...", 200, [], res);
+            })
+            .catch((error)=>{
+                console.log(error);
+                msj("Error al modificar los datos...", 200, [], res);
+            });
+        }
+    }
+};
+
+//Conulta de Modificar
+exports.modificarDireccionEstado = async (req, res) =>{
+    const {idUsuario} = req.query;
+    const{direccionEntrega, estado} = req.body;
+    var usuario = await ModeloUsuario.findOne({
+        where:{
+            idUsuario: idUsuario
+        }
+    });
+
+    if (!direccionEntrega || !estado || !idUsuario) {
+        //Mostramos mensaje al usuario
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
+    }
+    else{
+        const idUsuario = usuario.idUsuario;
+        var buscarPedido = await ModeloPedido.findOne({
+            //Le digo cual es el dato que comparará
+            where:{
+                idUsuario: idUsuario
+            }
+        });
+        //Validar si está null el campo
+        if (!buscarPedido) {
+            msj("El id no existe", 200, [], res);
+        }
+        else{
+            buscarPedido.direccionEntrega = direccionEntrega;
+            buscarPedido.estado = estado;
+            buscarPedido.save()
+
+            //Mostramos mensaje de verificación
+            .then((data) => {
+                console.log(data);
+                msj("Procesando orden...", 200, [], res);
+            })
+            .catch((error)=>{
+                console.log(error);
+                msj("Error al modificar los datos...", 200, [], res);
+            });
+        }
+    }
+};
+
+//Conulta de Modificar
+exports.modificarEstado = async (req, res) =>{
+    const {idUsuario} = req.query;
+    const{estado} = req.body;
+    var usuario = await ModeloUsuario.findOne({
+        where:{
+            idUsuario: idUsuario
+        }
+    });
+
+    if (!idUsuario || !estado) {
+        //Mostramos mensaje al usuario
+        msj("Por favor envíe los datos para la actualización...", 200, [], res);
+    }
+    else{
+        const idUsuario = usuario.idUsuario;
+        var buscarPedido = await ModeloPedido.findOne({
+            //Le digo cual es el dato que comparará
+            where:{
+                idUsuario: idUsuario
+            }
+        });
+        //Validar si está null el campo
+        if (!buscarPedido) {
+            msj("El id no existe", 200, [], res);
+        }
+        else{
+            buscarPedido.estado = estado;
+            buscarPedido.save()
+
+            //Mostramos mensaje de verificación
+            .then((data) => {
+                console.log(data);
+                msj("Actualizando pedido...", 200, [], res);
             })
             .catch((error)=>{
                 console.log(error);

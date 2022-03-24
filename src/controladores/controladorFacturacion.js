@@ -34,8 +34,7 @@ exports.guardarFactura = async (req, res) =>{
             idPedido: idPedido,
         })
         .then((data)=>{ //Este es para el mensaje que confirma el almacenamiento
-            console.log(data.idPedido);
-            msj("Registro almacenado correctamente...", 200, [], res);
+            // msj("Registro almacenado correctamente...", 200, [], res);
         })
         .catch((error)=>{
             console.log(error);

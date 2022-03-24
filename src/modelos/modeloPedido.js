@@ -27,14 +27,19 @@ const Pedido = db.define(
             allowNull: true,
         },
 
+        idProductosPedido:{
+            type: sequelize.INTEGER,
+            allowNull: true,
+        },
+
         idUsuario:{
             type: sequelize.INTEGER,
             allowNull: false,
         },
-
-        idProductosPedido:{
-            type: sequelize.INTEGER,
+        estado: {
+            type: sequelize.ENUM('recibido','facturado', 'listo', 'cancelado'),
             allowNull: true,
+            defaultvalue: 'recibido'
         }
        
     },

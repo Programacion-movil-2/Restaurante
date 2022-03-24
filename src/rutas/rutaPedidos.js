@@ -10,5 +10,6 @@ router.get('/listarPedido', controladorPedido.listarPedidos);
 router.post('/guardarPedido', controladorPedido.guardarPedido);
 router.put('/modificarPedido', controladorPedido.modificarPedido);
 router.delete('/eliminarPedido', controladorPedido.eliminarPedido);
-
+router.put('/modificarDireccionEstado', controladorPedido.modificarDireccionEstado);
+router.put('/modificarEstado', controladorPedido.modificarEstado);
 module.exports = router;
