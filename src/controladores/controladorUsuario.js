@@ -96,8 +96,7 @@ exports.modificarContrasena = async (req, res) =>{
 
             var buscarUsuario = await ModeloUsuario.findOne({
                 where:{
-                    correo: correo, 
-                    pin: pin,
+                    correo: correo,
                     estado: 'activo'
                 }
             });
