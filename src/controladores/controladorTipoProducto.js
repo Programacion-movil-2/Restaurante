@@ -129,7 +129,7 @@ exports.listarTipoNombre = async (req, res) => {
 
     const tipo = await ModeloTipoProducto.findAll({
         where: {
-            idTipoProducto: [3, 4, 5, 6, 7]
+            idTipoPrincipal: [1, 2]
         }
     });
 
