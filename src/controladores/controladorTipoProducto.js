@@ -1,55 +1,54 @@
 const ModeloTipoProducto = require('../modelos/modeloTipoProducto');
 const msj = require('../componentes/mensaje');
 
-exports.inicio = async (req, res) =>{
+exports.inicio = async (req, res) => {
     res.send("Estas en el inicio de tipos de productos");
 };
 
-exports.listarTiposProductos = async (req, res) =>{
+exports.listarTiposProductos = async (req, res) => {
     const listaTipoProducto = await ModeloTipoProducto.findAll();
-    
-    if(listaTipoProducto.length == 0){
+
+    if (listaTipoProducto.length == 0) {
         msj("No existen tipos de productos en la base", 200, [], res);
     }
-    else{
+    else {
         res.json(listaTipoProducto);
     }
 };
 
-exports.guardar = async (req, res) =>{
-    const{nombre, idTipoPrincipal,imagen} = req.body;
+exports.guardar = async (req, res) => {
+    const { nombre, idTipoPrincipal, imagen } = req.body;
 
-    if(!nombre)
-    {
+    if (!nombre) {
         msj("Debe enviar los datos que se solicitan", 200, [], res);
     }
-    else{
+    else {
         await ModeloTipoProducto.create({
             nombre: nombre,
             idTipoPrincipal: idTipoPrincipal,
-            imagen:imagen
+            imagen: imagen
         })
-        .then((data)=>{
-            console.log(data);
-            msj("Registro almacenado correctamente...", 200, [], res);
-        })
-        .catch((error)=>{
-            console.log(error);
-            msj("Error al guardar los datos...", 200, [], res);
-        });
+            .then((data) => {
+                console.log(data);
+                msj("Registro almacenado correctamente...", 200, [], res);
+            })
+            .catch((error) => {
+                console.log(error);
+                msj("Error al guardar los datos...", 200, [], res);
+            });
     }
 };
 
-exports.modificar = async (req, res) =>{
-    const {idTipoProducto} = req.query;
-    const{nombre, idTipoPrincipal} = req.body;
+exports.modificar = async (req, res) => {
+    const { idTipoProducto } = req.query;
+    const { nombre, idTipoPrincipal } = req.body;
 
     if (!idTipoProducto || !nombre) {
         msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
-    else{
+    else {
         var buscarTipoProducto = await ModeloTipoProducto.findOne({
-            where:{
+            where: {
                 idTipoProducto: idTipoProducto
             }
         });
@@ -57,50 +56,49 @@ exports.modificar = async (req, res) =>{
         if (!buscarTipoProducto) {
             msj("El id no existe", 200, [], res);
         }
-        else{
+        else {
             buscarTipoProducto.nombre = nombre;
             buscarTipoProducto.idTipoPrincipal = idTipoPrincipal;
             buscarTipoProducto.save()
 
-            .then((data) => {
-                console.log(data);
-                msj("Registro actualizado y guardado...", 200, [], res);
-            })
-            .catch((error)=>{
-                console.log(error);
-                msj("Error al modificar los datos...", 200, [], res);
-            });
+                .then((data) => {
+                    console.log(data);
+                    msj("Registro actualizado y guardado...", 200, [], res);
+                })
+                .catch((error) => {
+                    console.log(error);
+                    msj("Error al modificar los datos...", 200, [], res);
+                });
         }
     }
 };
 
-exports.eliminar = async (req, res) =>{
-    const {idTipoProducto} = req.query;
+exports.eliminar = async (req, res) => {
+    const { idTipoProducto } = req.query;
 
     if (!idTipoProducto) {
         msj("Por favor escriba el dato a eliminar...", 200, [], res);
     }
-    else{
+    else {
         await ModeloTipoProducto.destroy({
-            where:{
+            where: {
                 idTipoProducto: idTipoProducto
             }
         })
-        .then((data) => {
-            console.log(data);
+            .then((data) => {
+                console.log(data);
 
-            if (data == 0) {
-                msj("El id no existe", 200, [], res);
-            }
-            else
-            {
-                msj("Registro eliminado...", 200, [], res);
-            }
-        })
-        .catch((error)=>{
-            console.log(error);
-            msj("Error al eliminar el registro...", 200, [], res);
-        });
+                if (data == 0) {
+                    msj("El id no existe", 200, [], res);
+                }
+                else {
+                    msj("Registro eliminado...", 200, [], res);
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+                msj("Error al eliminar el registro...", 200, [], res);
+            });
     }
 };
 
@@ -113,8 +111,8 @@ exports.listarTipo = async (req, res) => {
     else {
         const tipo = await ModeloTipoProducto.findAll({
             where: {
-               
-                idTipoProducto:idTipoProducto
+
+                idTipoProducto: idTipoProducto
             }
         });
 
@@ -125,4 +123,21 @@ exports.listarTipo = async (req, res) => {
             res.json(tipo[0]);
         }
     }
+};
+
+exports.listarTipoNombre = async (req, res) => {
+
+    const tipo = await ModeloTipoProducto.findAll({
+        where: {
+            idTipoProducto: [3, 4, 5, 6, 7]
+        }
+    });
+
+    if (tipo.length == 0) {
+        msj("No existen productos en la base", 200, [], res);
+    }
+    else {
+        res.json(tipo);
+    }
+
 };
