@@ -47,9 +47,9 @@ exports.guardar = async (req, res) => {
 
 exports.modificar = async (req, res) => {
     const { idProducto } = req.query;
-    const { nombre, precio, imagen, descripcion, idTipoProducto } = req.body;
+    const { nombre, precio, imagen, descripcion } = req.body;
 
-    if (!idProducto || !idTipoProducto) {
+    if (!idProducto || !nombre) {
         msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
     else {
@@ -67,7 +67,6 @@ exports.modificar = async (req, res) => {
             buscarProducto.precio = precio;
             buscarProducto.imagen = imagen;
             buscarProducto.descripcion = descripcion;
-            buscarProducto.idTipoProducto = idTipoProducto;
             buscarProducto.save()
 
                 .then((data) => {
