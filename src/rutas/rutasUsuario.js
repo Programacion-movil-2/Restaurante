@@ -5,7 +5,7 @@ const ctrlAutenticacion = require('../controladores/Autenticacion');
 const msj = require('../componentes/mensaje');
 const router = Router();
 router.get('/', controladorUsuarios.inicio);
-router.get('/listar', ctrlAutenticacion.ValidarAutenticado,  controladorUsuarios.listar);
+router.get('/listar',  controladorUsuarios.listar);
 router.post('/guardar',
 body('identidad').isLength({min: 13}).withMessage('La longitud minima es de 13 caracteres'),  
 body('nombreUsuario').isLength({min: 5}).withMessage('La longitud minima es de 5 caracteres'), 

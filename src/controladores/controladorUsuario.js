@@ -126,9 +126,8 @@ exports.modificarContrasena = async (req, res) =>{
 }
 exports.eliminar = async (req, res) =>{
 
-    const {idUsuario} = req.query;
-    const {nombreUsuario} = req.body;
-    if(!nombreUsuario || !idUsuario){
+    const {nombreUsuario} = req.query;
+    if(!nombreUsuario){
         msj("Debe enviar el Nombre de Usuario", 200, [], res);
     }
     else{
