@@ -55,11 +55,11 @@ exports.guardarPersona = async (req, res) =>{
 
 //Conulta de Modificar
 exports.modificarPersona = async (req, res) =>{
-    const {idPersona} = req.query;
+    const {identidad} = req.query;
     const { nombre, apellido, telefono, idCargo} = req.body;
 
     //Validamos que nos esten enviando los datos
-    if (!idPersona || !nombre || !apellido, !telefono) {
+    if (!identidad || !nombre || !apellido, !telefono) {
         //Mostramos mensaje al usuario
         msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
@@ -67,7 +67,7 @@ exports.modificarPersona = async (req, res) =>{
         var buscarPersona = await ModeloPersona.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                idPersona: idPersona
+                identidad: identidad
             }
         });
 
@@ -99,10 +99,10 @@ exports.modificarPersona = async (req, res) =>{
 
 //Conulta de Eliminar
 exports.eliminarPersona = async (req, res) =>{
-    const {idPersona} = req.query;
+    const {identidad} = req.query;
 
     //Validamos que nos esten enviando los datos
-    if (!idPersona) {
+    if (!identidad) {
         //Mostramos mensaje al usuario
         msj("Por favor envíe los datos para la actualización...", 200, [], res);
     }
@@ -110,7 +110,7 @@ exports.eliminarPersona = async (req, res) =>{
         var buscarPersona = await ModeloPersona.findOne({
             //Le digo cual es el dato que comparará
             where:{
-                idPersona: idPersona
+                identidad: identidad
             }
         });
 
